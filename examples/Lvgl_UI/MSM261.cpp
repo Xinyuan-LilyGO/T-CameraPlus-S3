@@ -1,0 +1,107 @@
+/*
+ * @Description: None
+ * @version: V1.0.0
+ * @Author: LILYGO_L
+ * @Date: 2023-10-19 13:57:54
+ * @LastEditors: LILYGO_L
+ * @LastEditTime: 2023-12-07 14:48:38
+ * @License: GPL 3.0
+ */
+
+#include "DFrobot_MSM261.h"
+#include "pin_config.h"
+#include "custom.h"
+
+// 96 KHz
+#define MICROPHONE_RECORD_TIME 10    // 采样时间
+#define MICROPHONE_SAMPLE_RATE 96000 // 采样速率
+#define MICROPHONE_DATA_BIT 16       // 数据位数
+// 一秒采集的字节数量 计算方式：采样速率x声道数量x数据位数/8 (可以通过修改该值来修正录音出现噪点的情况)
+#define MICROPHONE_BYTERATE (((MICROPHONE_SAMPLE_RATE * MICROPHONE_NUM_CHANNEL * MICROPHONE_DATA_BIT) / 8) + 11550)
+#define MICROPHONE_WAVE_DATA_SIZE (MICROPHONE_RECORD_TIME * MICROPHONE_BYTERATE) // 采样字节
+#define MICROPHONE_NUM_COMMUNICATION_DATA 500                                    // 每次采集的数据量
+
+#define MICROPHONE_NUM_CHANNEL 2                                                   // 声道数量
+#define MICROPHONE_BLOCKALIGN ((MICROPHONE_NUM_CHANNEL * MICROPHONE_DATA_BIT) / 8) // 块对齐方式
+
+#define MICROPHONE_HEADER_SIZE 44
+
+#define MICROPHONE_FILE_NAME "/sound.wav"
+
+byte Wave_Header[MICROPHONE_HEADER_SIZE]; // WAVE文件的文件头
+char Wave_CommunicationData[MICROPHONE_NUM_COMMUNICATION_DATA];
+
+File file;
+DFRobot_Microphone microphone(MSM261_BCLK, MSM261_WS, MSM261_DIN);
+
+void MSM261_Initialization(void)
+{
+    if (microphone.begin(MICROPHONE_SAMPLE_RATE, MICROPHONE_DATA_BIT) != 0)
+    {
+        My_UI.MSM261_Initialization_Flag = false;
+    }
+
+    My_UI.MSM261_Initialization_Flag = true;
+}
+
+void MSM261_Loop(void)
+{
+    if (My_UI.MSM261_Initialization_Flag == true)
+    {
+        if (My_UI.MSM261_Recording_Flag == My_UI.MSM261_Recording_ON)
+        {
+            /*
+             * @brief 构建WAVE文件的头
+             * @param header 构建WAVE的文件
+             * @param totalDataLen 需要写入的数据长度
+             * @param longSampleRate 采样频率
+             * @param channels 声道数量
+             * @param byteRate 字节速率 计算方式：采样速率x声道数量x数据位数/8
+             * @param blockAlign 块对齐方式 计算方式：声道数量x数据位数/8
+            void createWavHeader(byte* header, int totalDataLen, int longSampleRate, uint8_t channels, int byteRate, uint8_t blockAlign);*/
+            microphone.createWavHeader(Wave_Header, MICROPHONE_WAVE_DATA_SIZE,
+                                       MICROPHONE_SAMPLE_RATE, MICROPHONE_NUM_CHANNEL, MICROPHONE_BYTERATE, 4);
+
+            SD.remove(MICROPHONE_FILE_NAME);
+            // 打开文件，如果没有文件就创建文件
+            file = SD.open(MICROPHONE_FILE_NAME, FILE_WRITE);
+            if (!file)
+            {
+                return;
+            }
+            // 将wave文件的头写入文件中
+            file.write(Wave_Header, MICROPHONE_HEADER_SIZE);
+            Serial.println("start");
+            for (int j = 0; j < MICROPHONE_WAVE_DATA_SIZE / MICROPHONE_NUM_COMMUNICATION_DATA; ++j)
+            {
+                microphone.read(Wave_CommunicationData, MICROPHONE_NUM_COMMUNICATION_DATA);
+
+                // 单声道数据处理，当使用单声道时需要处理另一个声道的数据
+                // 防止对有效声道的干扰产生杂音，当使用两个麦克风组成双声道时可以屏蔽此步骤。
+                for (uint32_t i = 0; i < (MICROPHONE_NUM_COMMUNICATION_DATA >> 2); i++)
+                {
+                    // 合并到右声道
+                    Wave_CommunicationData[(i << 2)] = 0;
+                    Wave_CommunicationData[(i << 2) + 1] = 0;
+
+                    // 合并到左声道
+                    // Wave_CommunicationData[(i << 2) + 2] = 0;
+                    // Wave_CommunicationData[(i << 2) + 3] = 0;
+                }
+                file.write((uint8_t *)Wave_CommunicationData, MICROPHONE_NUM_COMMUNICATION_DATA);
+            }
+            file.close();
+            // Serial.println("finish");
+
+            lv_obj_t *Recorder_win_1_label = lv_label_create(lv_win_get_content(guider_ui.Recorder_win_1));
+
+            My_UI.MSM261_Recording_Text += "\n\nRecord completed in 10 seconds\n";
+
+            lv_label_set_text(Recorder_win_1_label, (My_UI.MSM261_Recording_Text).c_str());
+            // Update current screen layout.
+            lv_obj_update_layout(guider_ui.Recorder);
+
+            My_UI.MSM261_Recording_Flag = My_UI.MSM261_Recording_OFF;
+        }
+    }
+}
