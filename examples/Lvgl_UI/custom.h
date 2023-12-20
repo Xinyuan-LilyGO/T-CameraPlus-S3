@@ -4,7 +4,7 @@
  * @Author: LILYGO_L
  * @Date: 2023-10-06 10:54:55
  * @LastEditors: LILYGO_L
- * @LastEditTime: 2023-11-21 17:55:18
+ * @LastEditTime: 2023-12-20 14:01:58
  * @License: GPL 3.0
  */
 #pragma once
@@ -14,7 +14,7 @@
 #include <map>
 #include <SD.h>
 #include "Audio.h"
-#include "./OV2640_Camera/OV2640_Camera.h"
+#include "OV2640_Camera.h"
 
 class My_Lvgl_UI
 {

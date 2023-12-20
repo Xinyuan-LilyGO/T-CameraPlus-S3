@@ -19,6 +19,9 @@
 
 #include <stdint.h>
 
+#define LV_USE_DCLOCK 1
+#define LV_USE_CAROUSEL 1
+
 /*====================
    COLOR SETTINGS
  *====================*/
