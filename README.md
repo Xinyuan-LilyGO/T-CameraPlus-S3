@@ -68,7 +68,7 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 * FLASH: 16M
 * Others: For more information, please visit[Espressif ESP32 S3 datasheet](https://www.espressif.com.cn/sites/default/files/documentation/esp32-s3_datasheet_en.pdf)
 
-### 2. 240x240px display with model fp-133h01d
+### 2. 1.3 Inch 240x240px display with model fp-133h01d
 
 * Driver chip: ST7789, CST816D
 * Bus communication protocol: Standard SPI
