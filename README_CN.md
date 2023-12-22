@@ -4,7 +4,7 @@
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
  * @LastEditors: LILYGO_L
- * @LastEditTime: 2023-12-12 10:59:26
+ * @LastEditTime: 2023-12-22 17:52:36
  * @License: GPL 3.0
 -->
 
@@ -65,14 +65,14 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 
 ## 模块
 
-### 1. ESP32­ S3­
+### 1. MCU
 
-* 芯片：ESP32 S3
+* 芯片：ESP32-S3
 * PSRAM：8M 
 * FLASH：16M
 * 其他说明：更多资料请访问[乐鑫官方ESP32­ S3数据手册](https://www.espressif.com.cn/sites/default/files/documentation/esp32-s3_datasheet_en.pdf)
 
-### 2. 1.3英寸型号为fp-133h01d的240x240px显示屏
+### 2. 型号为fp-133h01d的240x240px显示屏
 
 * 驱动芯片：ST7789、CST816D
 * 使用总线通信协议：标准SPI
@@ -96,6 +96,12 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 ### 7. OV2640摄像头
 
 ## 快速开始
+
+### 示例支持
+
+<p align="center" width="100%">
+    <img src="image/T-CameraPlus-S3_Example_Support.png" alt="example">
+</p>
 
 ### PlatformIO
 1. 安装[VisualStudioCode](https://code.visualstudio.com/Download)，根据你的系统类型选择安装。
