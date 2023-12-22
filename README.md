@@ -4,7 +4,7 @@
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
  * @LastEditors: LILYGO_L
- * @LastEditTime: 2023-12-12 11:27:38
+ * @LastEditTime: 2023-12-22 17:52:04
  * @License: GPL 3.0
 -->
 <h1 align = "center">T-CameraPlus-S3</h1>
@@ -61,14 +61,14 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 
 ## Module
 
-### 1. ESP32­ S3
+### 1. MCU
 
 * Chip: ESP32-S3
 * PSRAM: 8M
 * FLASH: 16M
 * Others: For more information, please visit[Espressif ESP32 S3 datasheet](https://www.espressif.com.cn/sites/default/files/documentation/esp32-s3_datasheet_en.pdf)
 
-### 2. 1.3 Inch 240x240px display with model fp-133h01d
+### 2. 240x240px display with model fp-133h01d
 
 * Driver chip: ST7789, CST816D
 * Bus communication protocol: Standard SPI
@@ -92,6 +92,12 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 ### 7. OV2640 camera
 
 ## QuickStart
+
+### Examples Support
+
+<p align="center" width="100%">
+    <img src="image/T-CameraPlus-S3_Example_Support.png" alt="example">
+</p>
 
 ### PlatformIO
 1. Install[VisualStudioCode](https://code.visualstudio.com/Download),Choose installation based on your system type.
