@@ -4,12 +4,12 @@
  * @Author: LILYGO_L
  * @Date: 2023-09-12 18:12:36
  * @LastEditors: LILYGO_L
- * @LastEditTime: 2024-02-03 11:30:02
+ * @LastEditTime: 2024-02-03 12:01:44
  * @License: GPL 3.0
 -->
 <h1 align = "center">T-CameraPlus-S3 original testing firmware instructions</h1>
 
-## Firmware compatible with [T-CameraPlus-S3_V1.0], [T-CameraPlus-S3_V1.1]
+## Applicable Version: [T-CameraPlus-S3_V1.0], [T-CameraPlus-S3_V1.1]
 ### <br />Change Log[ESP32S3]:
 #### T-CameraPlus-S3_V1.0_firmware_Lvgl_UI_V1.0.0:Original
 #### T-CameraPlus-S3_V1.1_firmware_Lvgl_UI_V1.0.1:
