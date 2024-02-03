@@ -5,11 +5,11 @@
  * @Description(EN):
  *      This is a simple UI designed for T-CameraPlus-S3.
  *
- * @version: V1.0.0
+ * @version: V1.0.1
  * @Author: LILYGO_L
  * @Date: 2023-09-22 11:59:37
  * @LastEditors: LILYGO_L
- * @LastEditTime: 2023-12-20 13:44:30
+ * @LastEditTime: 2024-01-29 10:53:09
  * @License: GPL 3.0
  */
 #include "lvgl.h"
@@ -134,8 +134,8 @@ void lvgl_initialization(void)
 void setup()
 {
     // 摄像头必须第一个初始化
-    // OV2640_Initialization(OV2640_Pixel_Format::PIXFORMAT_JPEG);
-    OV2640_Initialization(OV2640_Pixel_Format::PIXFORMAT_RGB565); // 需要屏幕显示摄像头数据时取消注释这个
+    OV2640_Initialization(OV2640_Pixel_Format::PIXFORMAT_JPEG);
+    // OV2640_Initialization(OV2640_Pixel_Format::PIXFORMAT_RGB565); // 需要屏幕显示摄像头数据时取消注释这个
 
     Serial.begin(115200);
 

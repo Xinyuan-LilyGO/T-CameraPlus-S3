@@ -4,15 +4,15 @@
  * @Author: LILYGO_L
  * @Date: 2023-10-18 17:31:49
  * @LastEditors: LILYGO_L
- * @LastEditTime: 2023-12-20 14:01:17
+ * @LastEditTime: 2024-02-03 11:02:18
  * @License: GPL 3.0
  */
 #include <WiFi.h>
 #include "custom.h"
 #include "pin_config.h"
 #include <esp_camera.h>
-#include "app_httpd.tpp"
-#include "OV2640_Camera.h"
+#include "./app_httpd.tpp"
+#include "./OV2640_Camera.h"
 #include "Arduino_GFX_Library.h"
 
 extern Arduino_GFX *gfx;
@@ -39,7 +39,7 @@ bool OV2640_Initialization(OV2640_Pixel_Format pixel_format)
     config.pin_pwdn = PWDN_GPIO_NUM;
     config.pin_reset = RESET_GPIO_NUM;
     config.xclk_freq_hz = 20000000;
-    config.frame_size = FRAMESIZE_HQVGA;
+    config.frame_size = FRAMESIZE_HVGA;
     config.pixel_format = (pixformat_t)pixel_format; // for streaming PIXFORMAT_JPEG
     // config.pixel_format = PIXFORMAT_RGB565; // for face detection/recognition
     config.grab_mode = CAMERA_GRAB_WHEN_EMPTY;

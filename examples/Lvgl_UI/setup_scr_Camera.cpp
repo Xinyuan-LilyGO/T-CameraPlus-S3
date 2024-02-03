@@ -4,7 +4,7 @@
  * @Author: LILYGO_L
  * @Date: 2023-11-13 17:50:10
  * @LastEditors: LILYGO_L
- * @LastEditTime: 2023-11-21 17:56:39
+ * @LastEditTime: 2024-01-24 17:27:15
  * @License: GPL 3.0
  */
 #include "lvgl.h"
@@ -31,8 +31,8 @@ void setup_scr_Camera(lv_ui *ui)
         "Wifi STA",
         "\n",
         "Wifi SoftAP",
-        "\n",
-        "Screen",
+        // "\n",
+        // "Screen",
         "",
     };
     lv_btnmatrix_set_map(ui->Camera_btnm_1, Camera_btnm_1_text_map);
