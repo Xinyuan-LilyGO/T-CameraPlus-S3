@@ -4,7 +4,7 @@
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
  * @LastEditors: LILYGO_L
- * @LastEditTime: 2024-02-03 10:08:55
+ * @LastEditTime: 2024-02-03 10:48:37
  * @License: GPL 3.0
 -->
 <h1 align = "center">T-CameraPlus-S3</h1>
@@ -66,30 +66,39 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 * Chip: ESP32-S3
 * PSRAM: 8M
 * FLASH: 16M
-* Others: For more information, please visit[Espressif ESP32 S3 datasheet](https://www.espressif.com.cn/sites/default/files/documentation/esp32-s3_datasheet_en.pdf)
+* Others: For more information, please visit[Espressif ESP32-S3 datasheet](https://www.espressif.com.cn/sites/default/files/documentation/esp32-s3_datasheet_en.pdf)
 
-### 2. 240x240px display with model fp-133h01d
+### 2. Screen
 
-* Driver chip: ST7789, CST816D
-* Bus communication protocol: Standard SPI
+* Screen Model: fp-133h0M1d
+* Size: 1.3-inch
+* Resolution Ratio: 240x240px
+* Screen Type: TFT
+* Driver Chip: ST7789V
+* Bus Communication Protocol: Standard SPI
 
-### 3. MAX98357A amplifier
+### 3. Touch
 
-* Bus communication protocol: IIS
-* Additional notes: Default configuration is Left/2 + Right/2 channels, gain of 9dB. To change the configuration, refer to the T-CameraPlus-S3 design schematic and adjust the resistors. The selected speaker should have a maximum rated power of 3.2W, with a impedance of around 4 ohms or less than 8 ohms.
+* Chip: CST816S
+* Bus Communication Protocol: IIC
 
-### 4. MSM261 digital microphone
+### 4. Speaker
 
-* Bus communication protocol: IIS
-* Additional notes: Default configuration is right channel. To change the configuration, refer to the T-CameraPlus-S3 design schematic and adjust the resistors.
+* Driver Chip: MAX98357A
+* Speaker Model: FS2011NB0807x
+* Speaker Size:14x7.1x3.9cm
+* Bus Communication Protocol: IIS
+* Others:  Default configuration is Left/2 + Right/2 channels, gain of 9dB. To change the configuration, refer to the T-CameraPlus-S3 design schematic and adjust the resistors. The selected speaker should have a maximum rated power of 3.2W, with a impedance of around 4 ohms or less than 8 ohms.
 
-### 5. AP1511B camera infrared filter switch chip
+### 5. Microphone
 
-### 6. FS2011NB0807 speaker
+* Driver Chip: MSM261S4030H0R
+* Bus Communication Protocol: IIS
+* Others:  Default configuration is right channel. To change the configuration, refer to the T-CameraPlus-S3 design schematic and adjust the resistors.
 
-* Specification: 14cm x 7.1cm x 3.9cm
-
-### 7. OV2640 camera
+### 6. Camera
+* CameraModel: OV2640
+* IR Filter Driver: AP1511B
 
 ## QuickStart
 

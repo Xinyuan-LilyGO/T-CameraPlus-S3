@@ -4,7 +4,7 @@
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
  * @LastEditors: LILYGO_L
- * @LastEditTime: 2024-02-03 09:46:51
+ * @LastEditTime: 2024-02-03 10:50:12
  * @License: GPL 3.0
 -->
 
@@ -70,30 +70,39 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 * 芯片：ESP32-S3
 * PSRAM：8M 
 * FLASH：16M
-* 其他说明：更多资料请访问[乐鑫官方ESP32­ S3数据手册](https://www.espressif.com.cn/sites/default/files/documentation/esp32-s3_datasheet_en.pdf)
+* 其他说明：更多资料请访问[乐鑫官方ESP32­-S3数据手册](https://www.espressif.com.cn/sites/default/files/documentation/esp32-s3_datasheet_en.pdf)
 
-### 2. 型号为fp-133h01d的240x240px显示屏
+### 2. 屏幕
 
-* 驱动芯片：ST7789、CST816D
+* 屏幕型号：fp-133h01d
+* 尺寸：1.3英寸
+* 分辨率：240x240px
+* 屏幕类型：TFT
+* 驱动芯片：ST7789V
 * 使用总线通信协议：标准SPI
 
-### 3. MAX98357A功放
+### 3. 触摸
 
+* 驱动芯片：CST816S
+* 总线通信协议：IIC
+
+### 4. 扬声器
+
+* 驱动芯片：MAX98357A
+* 扬声器型号：FS2011NB0807x
+* 扬声器规格：14x7.1x3.9cm
 * 使用总线通信协议：IIS
 * 其他说明：默认配置为Left/2 + Right/2通道，增益9dB，如需更改配置请根据T-CameraPlus-S3设计原理图上的说明更改电阻即可，选取的扬声器建议额定功率最大为3.2W，阻抗4欧左右8欧以下
 
-### 4. MSM261数字麦克风
+### 5. 麦克风
 
+* 驱动芯片：MSM261S4030H0R
 * 使用总线通信协议：IIS
 * 其他说明：默认配置为右声道通道，如需更改配置请根据T-CameraPlus-S3设计原理图上的说明更改电阻即可
 
-### 5. AP1511B摄像头红外滤镜开关芯片
-
-### 6. FS2011NB0807扬声器
-
-* 规格：14cmX7.1cmX3.9cm
-
-### 7. OV2640摄像头
+### 6. 摄像头
+* 摄像头型号：OV2640
+* 红外滤镜驱动：AP1511B
 
 ## 快速开始
 
