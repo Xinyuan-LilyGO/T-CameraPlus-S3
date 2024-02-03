@@ -4,7 +4,7 @@
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
  * @LastEditors: LILYGO_L
- * @LastEditTime: 2023-12-12 10:59:26
+ * @LastEditTime: 2024-02-03 09:46:51
  * @License: GPL 3.0
 -->
 
@@ -121,6 +121,7 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 
 | Setting                               | Value                                 |
 | :-------------------------------: | :-------------------------------: |
+| Board                                | Adafruit Feather ESP32-S3 No PSRAM|
 | Upload Speed                     | 921600                               |
 | USB Mode                           | Hardware CDC and JTAG     |
 | USB CDC On Boot                | Enabled                             |

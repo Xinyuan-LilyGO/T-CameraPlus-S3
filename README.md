@@ -4,7 +4,7 @@
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
  * @LastEditors: LILYGO_L
- * @LastEditTime: 2023-12-12 11:27:38
+ * @LastEditTime: 2024-02-03 09:48:32
  * @License: GPL 3.0
 -->
 <h1 align = "center">T-CameraPlus-S3</h1>
@@ -117,6 +117,7 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 
 | Setting                               | Value                                 |
 | :-------------------------------: | :-------------------------------: |
+| Board                                | Adafruit Feather ESP32-S3 No PSRAM|
 | Upload Speed                     | 921600                               |
 | USB Mode                           | Hardware CDC and JTAG     |
 | USB CDC On Boot                | Enabled                             |
