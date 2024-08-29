@@ -132,7 +132,7 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 
 | Setting                               | Value                                 |
 | :-------------------------------: | :-------------------------------: |
-| Board                                | 	ESP32S3 Dev Module|
+| Board                                | ESP32S3 Dev Module|
 | Upload Speed                     | 921600                               |
 | USB Mode                           | Hardware CDC and JTAG     |
 | USB CDC On Boot                | Enabled                             |
@@ -142,7 +142,8 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 | Flash Mode                         | QIO 80MHz                         |
 | Flash Size                           | 16MB (128Mb)                     |
 | Core Debug Level                | None                                 |
-| PSRAM                                | OPI PSRAM                         |
+| Partition Scheme                | 16M Flash (3MB APP/9.9MB FATFS) |
+| PSRAM                                | QSPI PSRAM                         |
 | Arduino Runs On                  | Core 1                               |
 | Events Run On                     | Core 1                               |
 

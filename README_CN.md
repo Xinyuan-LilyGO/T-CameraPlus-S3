@@ -146,7 +146,8 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 | Flash Mode                         | QIO 80MHz                         |
 | Flash Size                           | 16MB (128Mb)                     |
 | Core Debug Level                | None                                 |
-| PSRAM                                | OPI PSRAM                         |
+| Partition Scheme                | 16M Flash (3MB APP/9.9MB FATFS) |
+| PSRAM                                | QSPI PSRAM                         |
 | Arduino Runs On                  | Core 1                               |
 | Events Run On                     | Core 1                               |
 
