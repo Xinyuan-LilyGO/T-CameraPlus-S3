@@ -2,7 +2,7 @@
  * @Description: None
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
- * @LastEditTime: 2024-11-12 13:45:20
+ * @LastEditTime: 2024-11-12 13:50:43
  * @License: GPL 3.0
 -->
 
@@ -290,7 +290,6 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 ## 依赖库
 * [Arduino_GFX-1.3.7](https://github.com/moononournation/Arduino_GFX)
 * [lvgl-8.3.5](https://github.com/lvgl/lvgl)
-* [Arduino_Explorer-1.0.0]()
 * [arduino-libhelix-0.8.1](https://github.com/pschatzmann/arduino-libhelix)
 * [cst816t-1.5.0](https://github.com/koendv/cst816t)
 * [DFRobot_MSM261](https://github.com/DFRobot/DFrobot_MSM261)

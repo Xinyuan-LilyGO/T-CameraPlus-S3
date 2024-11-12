@@ -2,7 +2,7 @@
  * @Description: None
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
- * @LastEditTime: 2024-11-12 13:48:36
+ * @LastEditTime: 2024-11-12 13:50:39
  * @License: GPL 3.0
 -->
 <h1 align = "center">T-CameraPlus-S3</h1>
@@ -286,7 +286,6 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 ## DependentLibraries
 * [Arduino_GFX-1.3.7](https://github.com/moononournation/Arduino_GFX)
 * [lvgl-8.3.5](https://github.com/lvgl/lvgl)
-* [Arduino_Explorer-1.0.0]()
 * [arduino-libhelix-0.8.1](https://github.com/pschatzmann/arduino-libhelix)
 * [cst816t-1.5.0](https://github.com/koendv/cst816t)
 * [DFRobot_MSM261](https://github.com/DFRobot/DFrobot_MSM261)
