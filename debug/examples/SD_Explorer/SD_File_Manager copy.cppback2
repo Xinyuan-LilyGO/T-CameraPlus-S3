@@ -1,0 +1,249 @@
+/*
+ * @Description: None
+ * @version: V1.0.0
+ * @Author: None
+ * @Date: 2023-09-27 14:50:04
+ * @LastEditors: LILYGO_L
+ * @LastEditTime: 2023-09-28 18:10:29
+ * @License: GPL 3.0
+ */
+#include <Arduino.h>
+#include <FS.h>
+#include <SPI.h>
+#include <SD.h>
+#include <vector>
+#include "pin_config.h"
+#include <iostream>
+
+static std::vector<String> current_directory = {"/"};
+
+static bool File_Operation_Flag = 0;
+
+enum File_Manager_Sort
+{
+    File_Manager_Sort_Order = 0,
+    File_Manager_Sort_Reverse
+};
+
+struct File_Manager
+{
+    String file_name;
+    size_t file_size;
+};
+
+// void listDir(fs::FS &fs, String dirname, uint8_t levels)
+// {
+//     Serial.printf("Listing directory: %s\n", dirname);
+
+//     File root = fs.open(dirname);
+//     if (!root)
+//     {
+//         Serial.println("Failed to open directory");
+//         return;
+//     }
+//     if (!root.isDirectory())
+//     {
+//         Serial.println("Not a directory");
+//         return;
+//     }
+
+//     File file = root.openNextFile();
+//     while (file)
+//     {
+//         if (file.isDirectory())
+//         {
+//             Serial.print("  DIR : ");
+//             Serial.println(file.name());
+//             if (levels)
+//             {
+//                 listDir(fs, file.path(), levels - 1);
+//             }
+//         }
+//         else
+//         {
+//             Serial.print("  FILE: ");
+//             Serial.print(file.name());
+//             Serial.print("  SIZE: ");
+//             Serial.println(file.size());
+//         }
+//         file = root.openNextFile();
+//     }
+// }
+
+bool File_Directory_Refresh(fs::FS &fs, std::vector<String> directory_name, std::vector<String> *folder_name,
+                            std::vector<File_Manager> *file_manager)
+{
+    File_Manager file_manager_temp; // 文件结构体暂存器
+    String target_directory;        // 执行目录操作的目标路径
+    for (int i = 0; i < directory_name.size(); i++)
+    {
+        if (directory_name.back() == "/") // 判断尾部是否有文件页操作符号
+        {
+            target_directory = directory_name[i];
+        }
+        else
+        {
+            target_directory = target_directory + "/" + directory_name[i];
+        }
+    }
+    Serial.print("Target directory: ");
+    Serial.println(target_directory);
+    Serial.println();
+
+    File root = fs.open(target_directory); // fs打开目标目录
+    if (!root)
+    {
+        log_w("Failed to open directory");
+        return 0;
+    }
+    if (!root.isDirectory())
+    {
+        log_w("Not a directory");
+        return 0;
+    }
+
+    File file = root.openNextFile(); // 开始打开目标目录下的下一个文件
+    while (file)                     // 判断是否有文件
+    {
+        if (file.isDirectory()) // 判断是否是文件夹
+        {
+            log_v("  Folder: ");
+            log_v("%s", file.name());
+            folder_name->push_back(file.name());
+        }
+        else
+        {
+            log_v("  File: ");
+            log_v("%s", file.name());
+            log_v("   ");
+            log_v("%d Kb", file.size());
+            file_manager_temp.file_name = file.name();
+            file_manager_temp.file_size = file.size();
+            file_manager->push_back(file_manager_temp);
+        }
+        file = root.openNextFile(); // 循环打开目标目录下的下一个文件
+    }
+    return 1;
+}
+
+void File_Directory_Sort(unsigned char sort_method, std::vector<String> *folder_name,
+                         std::vector<File_Manager> *file_manager)
+{
+    switch (sort_method)
+    {
+    case File_Manager_Sort_Order:
+        sort(folder_name->begin(), folder_name->end()); // 顺序
+        sort(file_manager->begin(), file_manager->end(),
+             [](File_Manager a, File_Manager b)
+             { return a.file_name >= b.file_name; });
+        break;
+    case File_Manager_Sort_Reverse:
+        reverse(folder_name->begin(), folder_name->end()); // 倒序
+        sort(file_manager->begin(), file_manager->end(),
+             [](File_Manager a, File_Manager b)
+             { return a.file_name <= b.file_name; });
+        break;
+
+    default:
+        break;
+    }
+}
+
+void File_Directory_Serial_Output(std::vector<String> folder_name,
+                                  std::vector<File_Manager> file_manager)
+{
+    for (int i = 0; i < folder_name.size(); i++)
+    {
+        Serial.print("  Folder: ");
+        Serial.println(folder_name[i]);
+    }
+    for (int i = 0; i < file_manager.size(); i++)
+    {
+        Serial.print("  File: ");
+        Serial.print(file_manager[i].file_name);
+        Serial.print("   ");
+        Serial.printf("%d Kb\n", file_manager[i].file_size / 1024);
+    }
+    Serial.printf("\n");
+}
+
+void File_Root_Initialization(void)
+{
+    std::vector<String> root_directory = {"/"};
+    std::vector<String> folder_name;
+    std::vector<File_Manager> file_manager_struct;
+
+    File_Directory_Refresh(SD, root_directory, &folder_name, &file_manager_struct);
+    File_Directory_Sort(File_Manager_Sort_Order, &folder_name, &file_manager_struct);
+    File_Directory_Serial_Output(folder_name, file_manager_struct);
+}
+
+void setup()
+{
+    Serial.begin(115200);
+
+    pinMode(LCD_CS, OUTPUT);
+    digitalWrite(LCD_CS, HIGH);
+    // pinMode(PIN_SD_MISO, INPUT_PULLUP);                         // MISO pull-up resistor
+    SPI.begin(SCLK, MISO, MOSI, SD_CS); // SPI boots
+
+    while (!SD.begin(SD_CS, SPI, 80000000))
+    {
+        Serial.printf("SD card initialization failed !\n");
+        delay(1000);
+    }
+
+    File_Root_Initialization();
+}
+
+void loop()
+{
+    if (Serial.available() > 0)
+    {
+        char Serial_Command[100] = {0};
+        std::vector<String> folder_name;
+        std::vector<File_Manager> file_manager_struct;
+
+        Serial.read(Serial_Command, sizeof(Serial_Command));
+        // Serial.write(Serial_Command,sizeof(Serial_Command));
+
+        File_Directory_Refresh(SD, current_directory, &folder_name, &file_manager_struct);
+        File_Directory_Sort(File_Manager_Sort_Order, &folder_name, &file_manager_struct);
+
+        if (strcmp("Folder_Return", (const char *)Serial_Command) == 0)
+        {
+            folder_name.clear();
+            file_manager_struct.clear();
+            if (current_directory.back() == "/")
+            {
+                Serial.printf("This directory is already a root directory and cannot be returned!\n");
+            }
+            else
+            {
+                current_directory.pop_back();
+            }
+
+            File_Directory_Refresh(SD, current_directory, &folder_name, &file_manager_struct);
+            File_Directory_Sort(File_Manager_Sort_Order, &folder_name, &file_manager_struct);
+            File_Directory_Serial_Output(folder_name, file_manager_struct);
+            delay(3000);
+        }
+        else if (std::find(folder_name.begin(), folder_name.end(),
+                           (const char *)Serial_Command) != folder_name.end())
+        {
+            folder_name.clear();
+            file_manager_struct.clear();
+
+            current_directory.push_back(Serial_Command);
+
+            File_Directory_Refresh(SD, current_directory, &folder_name, &file_manager_struct);
+            File_Directory_Sort(File_Manager_Sort_Order, &folder_name, &file_manager_struct);
+            File_Directory_Serial_Output(folder_name, file_manager_struct);
+            delay(3000);
+        }
+        else
+        {
+            Serial.printf("Unknown Command\n");
+        }
+    }
+}

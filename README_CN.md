@@ -2,7 +2,7 @@
  * @Description: None
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
- * @LastEditTime: 2024-11-12 13:50:43
+ * @LastEditTime: 2024-11-12 14:13:20
  * @License: GPL 3.0
 -->
 
@@ -127,7 +127,7 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 
 | Firmware | Description | Picture |
 | ------  | ------  | ------ |
-| [Lvgl_UI](./firmware/T-CameraPlus-S3_V1.1_firmware_Lvgl_UI_V1.0.2.bin) | Fix stripe issue during camera testing, delete camera screen testing |  |
+| [Lvgl_UI](./firmware/T-CameraPlus-S3_V1.1_firmware_Lvgl_UI_V1.0.2.bin) | 简化录音测试 |  |
 
 ### PlatformIO
 1. 安装[VisualStudioCode](https://code.visualstudio.com/Download)，根据你的系统类型选择安装。

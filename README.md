@@ -2,7 +2,7 @@
  * @Description: None
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
- * @LastEditTime: 2024-11-12 13:50:39
+ * @LastEditTime: 2024-11-12 14:13:09
  * @License: GPL 3.0
 -->
 <h1 align = "center">T-CameraPlus-S3</h1>
@@ -124,7 +124,7 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 
 | Firmware | Description | Picture |
 | ------  | ------  | ------ |
-| [Lvgl_UI](./firmware/T-CameraPlus-S3_V1.1_firmware_Lvgl_UI_V1.0.2.bin) | Fix stripe issue during camera testing, delete camera screen testing |  |
+| [Lvgl_UI](./firmware/[T-CameraPlus-S3_V1.0-V1.1][Lvgl_UI]_firmware_V1.0.3.bin) | Simplify recording testing |  |
 
 ### PlatformIO
 1. Install[VisualStudioCode](https://code.visualstudio.com/Download),Choose installation based on your system type.

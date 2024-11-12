@@ -1,0 +1,134 @@
+/*
+ * @Description: None
+ * @version: V1.0.0
+ * @Author: None
+ * @Date: 2023-09-27 14:50:04
+ * @LastEditors: LILYGO_L
+ * @LastEditTime: 2023-09-27 18:35:07
+ * @License: GPL 3.0
+ */
+#include <Arduino.h>
+#include <FS.h>
+#include <SPI.h>
+#include <SD.h>
+#include "pin_config.h"
+
+struct File_Manager *File_Manager_struct = NULL;
+File File_Root;
+File File_CurrentFile;
+
+struct File_Manager
+{
+    String File_Name;
+    String Folder_Name;
+    int File_Number;
+    int Folder_Number;
+    String File_Path;
+    struct File_Manager *next;
+};
+
+void listDir(fs::FS &fs, String dirname, uint8_t levels)
+{
+    Serial.printf("Listing directory: %s\n", dirname);
+
+    File root = fs.open(dirname);
+    if (!root)
+    {
+        Serial.println("Failed to open directory");
+        return;
+    }
+    if (!root.isDirectory())
+    {
+        Serial.println("Not a directory");
+        return;
+    }
+
+    File file = root.openNextFile();
+    while (file)
+    {
+        if (file.isDirectory())
+        {
+            Serial.print("  DIR : ");
+            Serial.println(file.name());
+            if (levels)
+            {
+                listDir(fs, file.path(), levels - 1);
+            }
+        }
+        else
+        {
+            Serial.print("  FILE: ");
+            Serial.print(file.name());
+            Serial.print("  SIZE: ");
+            Serial.println(file.size());
+        }
+        file = root.openNextFile();
+    }
+}
+
+File_Manager *Current_File_Refresh(fs::FS &fs, String dirname)
+{
+    File_Manager *p = NULL;                                            // 创建头指针
+    File_Manager *temp = (File_Manager *)malloc(sizeof(File_Manager)); // 创建首元节点
+
+    Serial.printf("Listing directory: %s\n", dirname);
+
+    File root = fs.open(dirname);
+    if (!root)
+    {
+        Serial.println("Failed to open directory");
+        return "";
+    }
+    if (!root.isDirectory())
+    {
+        Serial.println("Not a directory");
+        return "";
+    }
+
+    // 首元节点先初始化
+    temp->elem = 1;
+    temp->next = NULL;
+    p = temp; // 头指针指向首元节点
+
+    File file = root.openNextFile();
+    while (file)
+    {
+        File_Manager_struct->next;
+        if (file.isDirectory())
+        {
+            Serial.print("  DIR : ");
+            Serial.println(file.name());
+        }
+        else
+        {
+            Serial.print("  FILE: ");
+            Serial.print(file.name());
+            Serial.print("  SIZE: ");
+            Serial.println(file.size());
+        }
+        file = root.openNextFile();
+    }
+    return file.path();
+}
+
+void setup()
+{
+    Serial.begin(115200);
+
+    pinMode(LCD_CS, OUTPUT);
+    digitalWrite(LCD_CS, HIGH);
+    // pinMode(PIN_SD_MISO, INPUT_PULLUP);                         // MISO pull-up resistor
+    SPI.begin(SCLK, MISO, MOSI, SD_CS); // SPI boots
+
+    while (!SD.begin(SD_CS, SPI, 80000000))
+    {
+        Serial.printf("SD card initialization failed !");
+        delay(1000);
+    }
+
+    Current_File_Refresh(SD, "/");
+}
+
+void loop()
+{
+}
