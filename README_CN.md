@@ -1,14 +1,16 @@
 <!--
  * @Description: None
- * @version: V1.0.0
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
- * @LastEditors: LILYGO_L
- * @LastEditTime: 2024-02-03 10:50:12
+ * @LastEditTime: 2024-11-12 13:45:20
  * @License: GPL 3.0
 -->
 
 <h1 align = "center">T-CameraPlus-S3</h1>
+
+<p align="center" width="100%">
+    <img src="image/13.jpg" alt="">
+</p>
 
 <p> 
   <a href="https://code.visualstudio.com/"> <img src="badges/VisualStudioCode_badge.png" height="25px" alt="VisualStudioCode_badge" /> </a>
@@ -28,7 +30,7 @@
 
 | Product                     | SOC           |  FLASH  |  PSRAM   | Link                   |
 | :------------------------: | :-----------: |:-------: | :---------: | :------------------: |
-| T-CameraPlus-S3_V1.1   | ESP32S3 |   16M   | 8M|  [暂未售卖]()  |
+| T-CameraPlus-S3_V1.1   | ESP32S3 |   16M   | 8M|  [LILYGO Mall](https://www.lilygo.cc/products/t-camera-plus-s3?_pos=2&_sid=aa4cbdb34&_ss=r)  |
 
 ## 目录
 - [描述](#描述)
@@ -48,19 +50,17 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 
 ## 预览
 
-### PCB板
+### 实物图
 
-<details><summary><b>T-CameraPlus-S3</b></summary>
+<p align="center" width="100%">
+    <img src="image/12.jpg" alt="">
+</p>
 
-### T-CameraPlus-S3 正面
+---
 
-
-### T-CameraPlus-S3 反面
-
-
-</details>
-
-### 渲染图
+<p align="center" width="100%">
+    <img src="image/13.jpg" alt="">
+</p>
 
 
 ## 模块
@@ -108,9 +108,26 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 
 ### 示例支持
 
-<p align="center" width="100%">
-    <img src="image/T-CameraPlus-S3_Example_Support.png" alt="example">
-</p>
+| Example | Support IDE And Version| Description | Picture |
+| ------  | ------  | ------ | ------ | 
+| [Wifi_Scan](./examples/Wifi_Scan) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
+| [Lvgl_UI](./examples/Lvgl_UI) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` | Product factory original testing |  |
+| [Wifi_Music](./examples/Wifi_Music) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
+| [SD_Music](./examples/SD_Music) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
+| [DMIC_ReadData](./examples/DMIC_ReadData) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
+| [SD_DMIC](./examples/SD_DMIC) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
+| [TFT](./examples/TFT) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
+| [IIC_Scan_2](./examples/IIC_Scan_2) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
+| [Camera_WebServer](./examples/Camera_WebServer) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
+| [CST816D](./examples/CST816D) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
+| [GFX_Test](./examples/GFX_Test) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
+| [SY6970](./examples/SY6970) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
+| [SD_MJPEG](./examples/SD_MJPEG) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
+| [Camera_Screen](./examples/Camera_Screen) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
+
+| Firmware | Description | Picture |
+| ------  | ------  | ------ |
+| [Lvgl_UI](./firmware/T-CameraPlus-S3_V1.1_firmware_Lvgl_UI_V1.0.2.bin) | Fix stripe issue during camera testing, delete camera screen testing |  |
 
 ### PlatformIO
 1. 安装[VisualStudioCode](https://code.visualstudio.com/Download)，根据你的系统类型选择安装。
@@ -258,17 +275,17 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 * A. 请按住“BOOT”按键重新下载程序。
 
 ## 项目
-* [SCH_T-CameraPlus-S3_V1.1](./project/SCH_T-CameraPlus-S3_V1.1.pdf)
+* [SCH_T-CameraPlus-S3_V1.1](project/SCH_T-CameraPlus-S3_V1.1_20241109.pdf)
 
 ## 资料
 * [Espressif](https://www.espressif.com/en/support/documents/technical-documents)
-* [AN_SY6970 ](./information/AN_SY6970.pdf)
-* [EVB_SY6970](./information/EVB_SY6970.pdf)
-* [AN-CST816T-v1](./information/AN-CST816T-v1.pdf)
-* [FS2011NB0807-H3.9-R01](./information/FS2011NB0807-H3.9-R01.pdf)
-* [MSM261S4030H0R](./information/MSM261S4030H0R.pdf)
-* [OV2640_Hardware_Application_V1.04](./information/OV2640_Hardware_Application_V1.04.pdf)
-* [OV2640_Software_Application_V1.03](./information/OV2640_Software_Application_V1.03.pdf)
+* [AN_SY6970 ](information/AN_SY6970.pdf)
+* [EVB_SY6970](information/EVB_SY6970.pdf)
+* [AN-CST816T-v1](information/AN-CST816T-v1.pdf)
+* [FS2011NB0807-H3.9-R01](information/FS2011NB0807-H3.9-R01.pdf)
+* [MSM261S4030H0R](information/MSM261S4030H0R.pdf)
+* [OV2640_Hardware_Application_V1.04](information/OV2640_Hardware_Application_V1.04.pdf)
+* [OV2640_Software_Application_V1.03](information/OV2640_Software_Application_V1.03.pdf)
 
 ## 依赖库
 * [Arduino_GFX-1.3.7](https://github.com/moononournation/Arduino_GFX)
@@ -281,3 +298,4 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 * [JPEGDEC-1.2.8](https://github.com/bitbank2/JPEGDEC)
 * [MiniTV](https://github.com/moononournation/MiniTV)
 * [XPowersLib-0.2.1](https://github.com/lewisxhe/XPowersLib)
+* [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)
