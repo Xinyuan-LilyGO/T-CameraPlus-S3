@@ -1,28 +1,31 @@
 /*
- * @Description(CN): 
+ * @Description(CN):
  *      OV2640连接Wifi投影
- * 
- * @Description(EN): 
+ *
+ * @Description(EN):
  *      OV2640 connected to WiFi projection
- * 
+ *
  * @version: V1.0.0
  * @Author: LILYGO_L
  * @Date: 2023-08-25 15:53:44
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2024-11-19 13:56:24
+ * @LastEditTime: 2024-11-19 18:10:53
  * @License: GPL 3.0
  */
 #include <WiFi.h>
 #include "camera_index.h"
 #include "app_httpd.tpp"
 #include "pin_config.h"
+#include "ESP32_OV5640_AF.h"
 
 // #define WIFI_SSID "xinyuandianzi"
 // #define WIFI_PASSWORD "AA15994823428"
 #define WIFI_SSID "LilyGo-AABB"
 #define WIFI_PASSWORD "xinyuandianzi"
 
-bool OV2640_Initialization(void)
+OV5640 ov5640 = OV5640();
+
+bool Camera_Initialization(void)
 {
     camera_config_t config;
     config.ledc_channel = LEDC_CHANNEL_0;
@@ -49,7 +52,7 @@ bool OV2640_Initialization(void)
     // config.pixel_format = PIXFORMAT_RGB565; // for face detection/recognition
     config.grab_mode = CAMERA_GRAB_WHEN_EMPTY;
     config.fb_location = CAMERA_FB_IN_PSRAM;
-    config.jpeg_quality = 40;
+    config.jpeg_quality = 20;
     config.fb_count = 2;
 
     // camera init
@@ -81,6 +84,12 @@ bool OV2640_Initialization(void)
         s->set_saturation(s, -2); // lower the saturation
     }
 
+    if (s->id.PID == OV5640_PID)
+    {
+        s->set_vflip(s, 1);   // 上下翻转
+        s->set_hmirror(s, 0); // 镜像翻转
+    }
+
     return true;
 }
 
@@ -90,7 +99,29 @@ void setup()
     Serial.setDebugOutput(true);
     Serial.println();
 
-    OV2640_Initialization();
+    if (Camera_Initialization() == true)
+    {
+        sensor_t *sensor = esp_camera_sensor_get();
+        ov5640.start(sensor);
+
+        if (ov5640.focusInit() == 0)
+        {
+            Serial.println("OV5640_Focus_Init Successful!");
+        }
+        else
+        {
+            Serial.println("OV5640_Focus_Init Failed!");
+        }
+
+        if (ov5640.autoFocusMode() == 0)
+        {
+            Serial.println("OV5640_Auto_Focus Successful!");
+        }
+        else
+        {
+            Serial.println("OV5640_Auto_Focus Failed!");
+        }
+    }
 
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
     WiFi.setSleep(false);
@@ -112,6 +143,44 @@ void setup()
 
 void loop()
 {
-    // Do nothing. Everything is done in another task by the web server
-    delay(10000);
+    uint8_t rc = ov5640.getFWStatus();
+    Serial.printf("FW_STATUS = 0x%x\n", rc);
+
+    if (rc == -1)
+    {
+        Serial.println("Check your OV5640");
+    }
+    else if (rc == FW_STATUS_S_FOCUSED)
+    {
+        Serial.println("Focused!");
+    }
+    else if (rc == FW_STATUS_S_FOCUSING)
+    {
+        Serial.println("Focusing!");
+    }
+    else
+    {
+    }
+
+    // camera_fb_t *fb = esp_camera_fb_get();
+
+    // if (!fb)
+    // {
+    //     Serial.println("Camera capture failed");
+    //     esp_camera_fb_return(fb);
+    //     return;
+    // }
+
+    // if (fb->format != PIXFORMAT_JPEG)
+    // {
+    //     Serial.println("Non-JPEG data not implemented");
+    //     esp_camera_fb_return(fb);
+    //     return;
+    // }
+
+    // // Draw Image on the display or Send Image to the connected device!
+    // // With (fb->buf, fb->len);
+    // esp_camera_fb_return(fb);
+
+    delay(100);
 }
