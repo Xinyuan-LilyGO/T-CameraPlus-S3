@@ -3,8 +3,8 @@
  * @version: V1.0.0
  * @Author: LILYGO_L
  * @Date: 2023-10-06 10:54:55
- * @LastEditors: LILYGO_L
- * @LastEditTime: 2023-11-21 17:55:18
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2024-11-20 14:34:03
  * @License: GPL 3.0
  */
 #pragma once
@@ -14,7 +14,7 @@
 #include <map>
 #include <SD.h>
 #include "Audio.h"
-#include "./OV2640_Camera.h"
+#include "OV2640_Camera.h"
 
 class My_Lvgl_UI
 {
@@ -211,7 +211,7 @@ public:
 
     // MSM261 flag
     bool MSM261_Initialization_Flag = false;
-    uint8_t MSM261_Recording_Flag = MSM261_Recording_OFF;
+    // uint8_t MSM261_Recording_Flag = MSM261_Recording_OFF;
     String MSM261_Recording_Text = "";
 
     // camera wifi

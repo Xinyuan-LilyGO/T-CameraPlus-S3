@@ -4,7 +4,7 @@
  * @Author: LILYGO_L
  * @Date: 2023-10-17 09:42:24
  * @LastEditors: LILYGO_L
- * @LastEditTime: 2023-10-17 16:43:58
+ * @LastEditTime: 2024-05-21 14:17:34
  * @License: GPL 3.0
  */
 #include "custom.h"
@@ -23,6 +23,9 @@ bool SY6970_Initialization(void)
     else
     {
         My_UI.SY6970_Initialization_Flag = true;
+
+        // 设置输入电流限制
+        PMU.setInputCurrentLimit(2000);
 
         // To obtain voltage data, the ADC must be enabled first
         PMU.enableADCMeasure();

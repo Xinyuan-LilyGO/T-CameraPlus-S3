@@ -4,15 +4,15 @@
  * @Author: LILYGO_L
  * @Date: 2023-10-18 17:31:49
  * @LastEditors: LILYGO_L
- * @LastEditTime: 2024-02-03 11:02:18
+ * @LastEditTime: 2024-01-24 17:27:56
  * @License: GPL 3.0
  */
 #include <WiFi.h>
 #include "custom.h"
 #include "pin_config.h"
 #include <esp_camera.h>
-#include "./app_httpd.tpp"
-#include "./OV2640_Camera.h"
+#include "app_httpd.tpp"
+#include "OV2640_Camera.h"
 #include "Arduino_GFX_Library.h"
 
 extern Arduino_GFX *gfx;

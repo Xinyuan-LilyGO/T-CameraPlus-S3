@@ -1288,81 +1288,81 @@ static void Recorder_event_handler(lv_event_t *e)
     }
 }
 
-static void Recorder_btnm_1_event_handler(lv_event_t *e)
-{
-    lv_event_code_t code = lv_event_get_code(e);
+// static void Recorder_btnm_1_event_handler(lv_event_t *e)
+// {
+//     lv_event_code_t code = lv_event_get_code(e);
 
-    switch (code)
-    {
-    case LV_EVENT_CLICKED:
-    {
-        lv_obj_t *obj = lv_event_get_target(e);
-        uint32_t id = lv_btnmatrix_get_selected_btn(obj);
-        switch (id)
-        {
-        case 0:
-        {
-            My_UI.MSM261_Recording_Text.clear();
-            // Write the load screen code.
-            lv_obj_t *act_scr = lv_scr_act();
-            lv_disp_t *d = lv_obj_get_disp(act_scr);
-            if (d->prev_scr == NULL && (d->scr_to_load == NULL || d->scr_to_load == act_scr))
-            {
-                if (guider_ui.Recorder_del == true)
-                {
-                    setup_scr_Recorder(&guider_ui);
-                }
-                lv_scr_load_anim(guider_ui.Recorder, LV_SCR_LOAD_ANIM_NONE, 200, 300, true);
-                guider_ui.Recorder_del = true;
-            }
-            break;
-        }
-        case 1:
-        {
-            My_UI.MSM261_Recording_Text.c_str();
-            lv_obj_t *Recorder_win_1_label = lv_label_create(lv_win_get_content(guider_ui.Recorder_win_1));
+//     switch (code)
+//     {
+//     case LV_EVENT_CLICKED:
+//     {
+//         lv_obj_t *obj = lv_event_get_target(e);
+//         uint32_t id = lv_btnmatrix_get_selected_btn(obj);
+//         switch (id)
+//         {
+//         case 0:
+//         {
+//             My_UI.MSM261_Recording_Text.clear();
+//             // Write the load screen code.
+//             lv_obj_t *act_scr = lv_scr_act();
+//             lv_disp_t *d = lv_obj_get_disp(act_scr);
+//             if (d->prev_scr == NULL && (d->scr_to_load == NULL || d->scr_to_load == act_scr))
+//             {
+//                 if (guider_ui.Recorder_del == true)
+//                 {
+//                     setup_scr_Recorder(&guider_ui);
+//                 }
+//                 lv_scr_load_anim(guider_ui.Recorder, LV_SCR_LOAD_ANIM_NONE, 200, 300, true);
+//                 guider_ui.Recorder_del = true;
+//             }
+//             break;
+//         }
+//         case 1:
+//         {
+//             My_UI.MSM261_Recording_Text.c_str();
+//             lv_obj_t *Recorder_win_1_label = lv_label_create(lv_win_get_content(guider_ui.Recorder_win_1));
 
-            SD_Initialization();
+//             SD_Initialization();
 
-            if (My_UI.SD_Initialization_Flag == true)
-            {
-                if (My_UI.MSM261_Initialization_Flag == true)
-                {
+//             if (My_UI.SD_Initialization_Flag == true)
+//             {
+//                 if (My_UI.MSM261_Initialization_Flag == true)
+//                 {
 
-                    My_UI.MSM261_Recording_Text += "MSM261 initialization successful\n";
-                    My_UI.MSM261_Recording_Text += "Start recording for 10 seconds\n";
+//                     My_UI.MSM261_Recording_Text += "MSM261 initialization successful\n";
+//                     My_UI.MSM261_Recording_Text += "Start recording for 10 seconds\n";
 
-                    My_UI.MSM261_Recording_Flag = My_UI.MSM261_Recording_ON;
-                }
-                else
-                {
-                    My_UI.MSM261_Recording_Text += "MSM261 initialization failed\n";
-                }
-            }
-            else
-            {
-                My_UI.MSM261_Recording_Text = "SD card initialization failed";
-            }
+//                     My_UI.MSM261_Recording_Flag = My_UI.MSM261_Recording_ON;
+//                 }
+//                 else
+//                 {
+//                     My_UI.MSM261_Recording_Text += "MSM261 initialization failed\n";
+//                 }
+//             }
+//             else
+//             {
+//                 My_UI.MSM261_Recording_Text = "SD card initialization failed";
+//             }
 
-            lv_label_set_text(Recorder_win_1_label, (My_UI.MSM261_Recording_Text).c_str());
-            // Update current screen layout.
-            lv_obj_update_layout(guider_ui.Recorder);
+//             lv_label_set_text(Recorder_win_1_label, (My_UI.MSM261_Recording_Text).c_str());
+//             // Update current screen layout.
+//             lv_obj_update_layout(guider_ui.Recorder);
 
-            break;
-        }
-        default:
-            break;
-        }
-        break;
-    }
-    default:
-        break;
-    }
-}
+//             break;
+//         }
+//         default:
+//             break;
+//         }
+//         break;
+//     }
+//     default:
+//         break;
+//     }
+// }
 void events_init_Recorder(lv_ui *ui)
 {
     lv_obj_add_event_cb(ui->Recorder, Recorder_event_handler, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui->Recorder_btnm_1, Recorder_btnm_1_event_handler, LV_EVENT_ALL, NULL);
+    // lv_obj_add_event_cb(ui->Recorder_btnm_1, Recorder_btnm_1_event_handler, LV_EVENT_ALL, NULL);
 }
 static void Explorer_event_handler(lv_event_t *e)
 {

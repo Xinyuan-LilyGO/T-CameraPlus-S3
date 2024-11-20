@@ -4,7 +4,7 @@
  * @Author: LILYGO_L
  * @Date: 2023-10-16 11:22:51
  * @LastEditors: LILYGO_L
- * @LastEditTime: 2023-11-21 11:13:14
+ * @LastEditTime: 2024-06-14 22:23:25
  * @License: GPL 3.0
  */
 #ifndef GUI_GUIDER_H
@@ -102,7 +102,8 @@ extern "C"
         lv_obj_t *Recorder;
         bool Recorder_del;
         lv_obj_t *Recorder_win_1;
-        lv_obj_t *Recorder_btnm_1;
+        lv_obj_t *Recorder_tabview_1_tab_1_label;
+        // lv_obj_t *Recorder_btnm_1;
 
         lv_obj_t *Explorer;
         bool Explorer_del;
