@@ -5,11 +5,9 @@
  * @Description(EN):
  *      This is a simple UI designed for T-CameraPlus-S3.
  *
- * @version: V1.0.1
  * @Author: LILYGO_L
  * @Date: 2023-09-22 11:59:37
- * @LastEditors: LILYGO_L
- * @LastEditTime: 2024-01-29 10:53:09
+ * @LastEditTime: 2025-01-02 10:26:08
  * @License: GPL 3.0
  */
 #include "lvgl.h"
