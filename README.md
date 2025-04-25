@@ -2,7 +2,7 @@
  * @Description: None
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
- * @LastEditTime: 2025-04-25 13:46:42
+ * @LastEditTime: 2025-04-25 13:49:35
  * @License: GPL 3.0
 -->
 <h1 align = "center">T-CameraPlus-S3</h1>
@@ -76,19 +76,19 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 * Screen Type: TFT
 * Driver Chip: ST7789V
 * Bus Communication Protocol: Standard SPI
-* Dependencies:
-    >[Arduino_GFX-1.3.7](https://github.com/moononournation/Arduino_GFX)
-    >[lvgl-8.3.5](https://github.com/lvgl/lvgl)
-    >[JPEGDEC-1.2.8](https://github.com/bitbank2/JPEGDEC)
-    >[MiniTV](https://github.com/moononournation/MiniTV)
+* Dependent libraries:
+    >[Arduino_GFX-1.3.7](https://github.com/moononournation/Arduino_GFX)  <br /> 
+    >[lvgl-8.3.5](https://github.com/lvgl/lvgl)  <br /> 
+    >[JPEGDEC-1.2.8](https://github.com/bitbank2/JPEGDEC)  <br /> 
+    >[MiniTV](https://github.com/moononournation/MiniTV)  <br /> 
     >[TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)
 
 ### 3. Touch
 
 * Chip: CST816S
 * Bus Communication Protocol: IIC
-* Dependencies:
-    >[cst816t-1.5.0](https://github.com/koendv/cst816t)
+* Dependent libraries:
+    >[cst816t-1.5.0](https://github.com/koendv/cst816t)  <br /> 
     >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
 
 ### 4. Speaker
@@ -98,8 +98,8 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 * Others:  Default configuration is Left/2 + Right/2 channels, gain of 9dB. To change the configuration, refer to the T-CameraPlus-S3 design schematic and adjust the resistors. The selected speaker should have a maximum rated power of 3.2W, with a impedance of around 4 ohms or less than 8 ohms.
 * Relevant information:
     >[MAX98357A](./information/MAX98357AETE+T.pdf)
-* Dependencies:
-    >[arduino-libhelix-0.8.1](https://github.com/pschatzmann/arduino-libhelix)
+* Dependent libraries:
+    >[arduino-libhelix-0.8.1](https://github.com/pschatzmann/arduino-libhelix)  <br /> 
     >[ESP32-audioI2S-3.0.6](https://github.com/schreibfaul1/ESP32-audioI2S)
 
 ### 5. Microphone
@@ -114,8 +114,8 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 > * Others:  Default configuration is right channel. To change the configuration, refer to the T-CameraPlus-S3 design schematic and adjust the resistors.
 > * Relevant information:
 >     >[MSM261S4030H0R](information/MSM261S4030H0R.pdf)
-> * Dependencies:
->     >[DFRobot_MSM261](https://github.com/DFRobot/DFrobot_MSM261)
+> * Dependent libraries:
+>     >[DFRobot_MSM261](https://github.com/DFRobot/DFrobot_MSM261)  <br /> 
 >     >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
 
 > #### T-CameraPlus-S3_V1.2 version
@@ -124,23 +124,23 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 > * Others:  Default configuration is right channel. To change the configuration, refer to the T-CameraPlus-S3 design schematic and adjust the resistors.
 > * Relevant information:
 >    >[MP34DT05-A](./information/mp34dt05-a.pdf)
-> * Dependencies:
+> * Dependent libraries:
 >    >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
 
 ### 6. Camera
 * CameraModel: OV2640
 * IR Filter Driver: AP1511B
 * Relevant information:
-    >[OV2640_Hardware_Application_V1.04](information/OV2640_Hardware_Application_V1.04.pdf)
+    >[OV2640_Hardware_Application_V1.04](information/OV2640_Hardware_Application_V1.04.pdf)  <br /> 
     >[OV2640_Software_Application_V1.03](information/OV2640_Software_Application_V1.03.pdf)
 
 ### 7. Power Management Chip
 * Chip: SY6970
 * Relevant information:
->[AN_SY6970 ](information/AN_SY6970.pdf)
+>[AN_SY6970 ](information/AN_SY6970.pdf)  <br /> 
 >[EVB_SY6970](information/EVB_SY6970.pdf)
-* Dependencies:
->[XPowersLib-0.2.1](https://github.com/lewisxhe/XPowersLib)
+* Dependent libraries:
+>[XPowersLib-0.2.1](https://github.com/lewisxhe/XPowersLib)  <br /> 
 >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
 
 ## QuickStart

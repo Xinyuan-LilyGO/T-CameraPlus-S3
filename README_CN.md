@@ -2,7 +2,7 @@
  * @Description: None
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
- * @LastEditTime: 2025-04-25 13:38:02
+ * @LastEditTime: 2025-04-25 13:50:00
  * @License: GPL 3.0
 -->
 
@@ -80,10 +80,10 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 * 驱动芯片：ST7789V
 * 总线通信协议：标准SPI
 * 依赖库：
-    >[Arduino_GFX-1.3.7](https://github.com/moononournation/Arduino_GFX)
-    >[lvgl-8.3.5](https://github.com/lvgl/lvgl)
-    >[JPEGDEC-1.2.8](https://github.com/bitbank2/JPEGDEC)
-    >[MiniTV](https://github.com/moononournation/MiniTV)
+    >[Arduino_GFX-1.3.7](https://github.com/moononournation/Arduino_GFX)  <br /> 
+    >[lvgl-8.3.5](https://github.com/lvgl/lvgl)  <br /> 
+    >[JPEGDEC-1.2.8](https://github.com/bitbank2/JPEGDEC)  <br /> 
+    >[MiniTV](https://github.com/moononournation/MiniTV)  <br /> 
     >[TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)
 
 ### 3. 触摸
@@ -91,7 +91,7 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 * 芯片：CST816S
 * 总线通信协议：IIC
 * 依赖库：
-    >[cst816t-1.5.0](https://github.com/koendv/cst816t)
+    >[cst816t-1.5.0](https://github.com/koendv/cst816t)  <br /> 
     >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
 
 ### 4. 扬声器
@@ -102,7 +102,7 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 * 相关资料：
     >[MAX98357A](./information/MAX98357AETE+T.pdf)
 * 依赖库：
-    >[arduino-libhelix-0.8.1](https://github.com/pschatzmann/arduino-libhelix)
+    >[arduino-libhelix-0.8.1](https://github.com/pschatzmann/arduino-libhelix)  <br /> 
     >[ESP32-audioI2S-3.0.6](https://github.com/schreibfaul1/ESP32-audioI2S)
 
 ### 5. 麦克风
@@ -114,7 +114,7 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 > * 相关资料：
 >     >[MSM261S4030H0R](information/MSM261S4030H0R.pdf)
 > * 依赖库：
->     >[DFRobot_MSM261](https://github.com/DFRobot/DFrobot_MSM261)
+>     >[DFRobot_MSM261](https://github.com/DFRobot/DFrobot_MSM261)  <br /> 
 >     >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
 
 > #### T-CameraPlus-S3_V1.2 版本
@@ -130,16 +130,16 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 * 摄像头型号：OV2640
 * 红外滤镜驱动：AP1511B
 * 相关资料：
-    >[OV2640_Hardware_Application_V1.04](information/OV2640_Hardware_Application_V1.04.pdf)
+    >[OV2640_Hardware_Application_V1.04](information/OV2640_Hardware_Application_V1.04.pdf)  <br /> 
     >[OV2640_Software_Application_V1.03](information/OV2640_Software_Application_V1.03.pdf)
 
 ### 7. 电源管理芯片
 * 芯片：SY6970
 * 相关资料：
-    >[AN_SY6970 ](information/AN_SY6970.pdf)
+    >[AN_SY6970 ](information/AN_SY6970.pdf)  <br /> 
     >[EVB_SY6970](information/EVB_SY6970.pdf)
 * 依赖库：
-    >[XPowersLib-0.2.1](https://github.com/lewisxhe/XPowersLib)
+    >[XPowersLib-0.2.1](https://github.com/lewisxhe/XPowersLib)  <br /> 
     >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
 
 ## 快速开始
