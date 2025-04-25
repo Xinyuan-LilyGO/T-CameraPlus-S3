@@ -1,15 +1,15 @@
 /*
- * @Description(CN): 
+ * @Description(CN):
  *      OV2640连接Wifi投影
- * 
- * @Description(EN): 
+ *
+ * @Description(EN):
  *      OV2640 connected to WiFi projection
- * 
+ *
  * @version: V1.0.0
  * @Author: LILYGO_L
  * @Date: 2023-08-25 15:53:44
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2024-11-19 13:56:24
+ * @LastEditTime: 2025-04-03 16:31:56
  * @License: GPL 3.0
  */
 #include <WiFi.h>
@@ -90,6 +90,9 @@ void setup()
     Serial.setDebugOutput(true);
     Serial.println();
 
+    pinMode(KEY1, INPUT_PULLUP);
+    pinMode(AP1511B_FBC, OUTPUT);
+
     OV2640_Initialization();
 
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -112,6 +115,15 @@ void setup()
 
 void loop()
 {
+    if (digitalRead(KEY1) == LOW)
+    {
+        digitalWrite(AP1511B_FBC, HIGH);
+    }
+    else
+    {
+        digitalWrite(AP1511B_FBC, LOW);
+    }
+
     // Do nothing. Everything is done in another task by the web server
-    delay(10000);
+    delay(10);
 }

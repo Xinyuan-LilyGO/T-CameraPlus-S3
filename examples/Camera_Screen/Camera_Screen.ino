@@ -8,14 +8,13 @@
  * @version: V1.0.0
  * @Author: LILYGO_L
  * @Date: 2023-11-15 16:57:21
- * @LastEditors: LILYGO_L
- * @LastEditTime: 2023-11-25 09:04:35
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2025-04-08 11:57:33
  * @License: GPL 3.0
  */
 #include <Arduino.h>
 #include "Arduino_GFX_Library.h"
 #include "pin_config.h"
-#include <esp_camera.h>
 #include "camera_index.h"
 #include "app_httpd.tpp"
 

@@ -2,7 +2,7 @@
  * @Description: None
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
- * @LastEditTime: 2024-11-20 14:28:43
+ * @LastEditTime: 2025-04-25 13:38:02
  * @License: GPL 3.0
 -->
 
@@ -21,16 +21,16 @@
 ## **[English](./README.md) | 中文**
 
 ## 版本迭代:
-| Version                               | Update date                       |
-| :-------------------------------: | :-------------------------------: |
-| T-CameraPlus-S3_V1.0            | 2023-10-23                         |
-| T-CameraPlus-S3_V1.1            | 2023-11-20                         |
+| Version                               | Update date                       |Update description|
+| :-------------------------------: | :-------------------------------: |:--------------: |
+| T-CameraPlus-S3_V1.0-V1.1            | 2023-10-23                         |  初始版本  |
+| T-CameraPlus-S3_V1.2            | 2025-04-17                         |提升wifi性能，修改麦克风型号，修改引脚号优化走线    |
 
 ## 购买链接
 
 | Product                     | SOC           |  FLASH  |  PSRAM   | Link                   |
 | :------------------------: | :-----------: |:-------: | :---------: | :------------------: |
-| T-CameraPlus-S3_V1.1   | ESP32S3 |   16M   | 8M|  [LILYGO Mall](https://www.lilygo.cc/products/t-camera-plus-s3?_pos=2&_sid=aa4cbdb34&_ss=r)  |
+| T-CameraPlus-S3_V1.0-V1.1   | ESP32S3 |   16M   | 8M|  [LILYGO Mall](https://www.lilygo.cc/products/t-camera-plus-s3?_pos=2&_sid=aa4cbdb34&_ss=r)  |
 
 ## 目录
 - [描述](#描述)
@@ -40,8 +40,6 @@
 - [引脚总览](#引脚总览)
 - [常见问题](#常见问题)
 - [项目](#项目)
-- [资料](#资料)
-- [依赖库](#依赖库)
 
 ## 描述
 
@@ -70,7 +68,8 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 * 芯片：ESP32-S3
 * PSRAM：8M 
 * FLASH：16M
-* 其他说明：更多资料请访问[乐鑫官方ESP32­-S3数据手册](https://www.espressif.com.cn/sites/default/files/documentation/esp32-s3_datasheet_en.pdf)
+* 相关资料：
+    >[Espressif](https://www.espressif.com/en/support/documents/technical-documents)
 
 ### 2. 屏幕
 
@@ -79,30 +78,69 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 * 分辨率：240x240px
 * 屏幕类型：TFT
 * 驱动芯片：ST7789V
-* 使用总线通信协议：标准SPI
+* 总线通信协议：标准SPI
+* 依赖库：
+    >[Arduino_GFX-1.3.7](https://github.com/moononournation/Arduino_GFX)
+    >[lvgl-8.3.5](https://github.com/lvgl/lvgl)
+    >[JPEGDEC-1.2.8](https://github.com/bitbank2/JPEGDEC)
+    >[MiniTV](https://github.com/moononournation/MiniTV)
+    >[TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)
 
 ### 3. 触摸
 
-* 驱动芯片：CST816S
+* 芯片：CST816S
 * 总线通信协议：IIC
+* 依赖库：
+    >[cst816t-1.5.0](https://github.com/koendv/cst816t)
+    >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
 
 ### 4. 扬声器
 
-* 驱动芯片：MAX98357A
-* 扬声器型号：FS2011NB0807x
-* 扬声器规格：14x7.1x3.9cm
+* 芯片：MAX98357A
 * 使用总线通信协议：IIS
 * 其他说明：默认配置为Left/2 + Right/2通道，增益9dB，如需更改配置请根据T-CameraPlus-S3设计原理图上的说明更改电阻即可，选取的扬声器建议额定功率最大为3.2W，阻抗4欧左右8欧以下
+* 相关资料：
+    >[MAX98357A](./information/MAX98357AETE+T.pdf)
+* 依赖库：
+    >[arduino-libhelix-0.8.1](https://github.com/pschatzmann/arduino-libhelix)
+    >[ESP32-audioI2S-3.0.6](https://github.com/schreibfaul1/ESP32-audioI2S)
 
 ### 5. 麦克风
 
-* 驱动芯片：MSM261S4030H0R
-* 使用总线通信协议：IIS
-* 其他说明：默认配置为右声道通道，如需更改配置请根据T-CameraPlus-S3设计原理图上的说明更改电阻即可
+> #### T-CameraPlus-S3_V1.0-V1.1 版本
+> * 芯片：MSM261S4030H0R
+> * 总线通信协议：IIS
+> * 其他说明：默认配置为右声道通道，如需更改配置请根据T-CameraPlus-S3设计原理图上的说明更改电阻即可
+> * 相关资料：
+>     >[MSM261S4030H0R](information/MSM261S4030H0R.pdf)
+> * 依赖库：
+>     >[DFRobot_MSM261](https://github.com/DFRobot/DFrobot_MSM261)
+>     >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
+
+> #### T-CameraPlus-S3_V1.2 版本
+> * 芯片：MP34DT05-A
+> * 总线通信协议：PDM
+> * 其他说明：默认配置为右声道通道，如需更改配置请根据T-CameraPlus-S3设计原理图上的说明更改电阻即可
+> * 相关资料：
+>    >[MP34DT05-A](./information/mp34dt05-a.pdf)
+> * 依赖库：
+>    >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
 
 ### 6. 摄像头
 * 摄像头型号：OV2640
 * 红外滤镜驱动：AP1511B
+* 相关资料：
+    >[OV2640_Hardware_Application_V1.04](information/OV2640_Hardware_Application_V1.04.pdf)
+    >[OV2640_Software_Application_V1.03](information/OV2640_Software_Application_V1.03.pdf)
+
+### 7. 电源管理芯片
+* 芯片：SY6970
+* 相关资料：
+    >[AN_SY6970 ](information/AN_SY6970.pdf)
+    >[EVB_SY6970](information/EVB_SY6970.pdf)
+* 依赖库：
+    >[XPowersLib-0.2.1](https://github.com/lewisxhe/XPowersLib)
+    >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
 
 ## 快速开始
 
@@ -129,7 +167,8 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 
 | Firmware | Description | Picture |
 | ------  | ------  | ------ |
-| [Lvgl_UI](./firmware/T-CameraPlus-S3_V1.1_firmware_Lvgl_UI_V1.0.2.bin) | 简化录音测试 |  |
+| [Lvgl_UI(V1.0-V1.1)](./firmware/[T-CameraPlus-S3_V1.0-V1.1][Lvgl_UI]_firmware_202406142310.bin) |  |  |
+| [Lvgl_UI(V1.2)](./firmware/[T-CameraPlus-S3_V1.2][Lvgl_UI]_firmware_202504081446.bin) |  |  |
 
 ### PlatformIO
 1. 安装[VisualStudioCode](https://code.visualstudio.com/Download)，根据你的系统类型选择安装。
@@ -155,7 +194,7 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 
 | Setting                               | Value                                 |
 | :-------------------------------: | :-------------------------------: |
-| Board                                | 	ESP32S3 Dev Module|
+| Board                                | ESP32S3 Dev Module|
 | Upload Speed                     | 921600                               |
 | USB Mode                           | Hardware CDC and JTAG     |
 | USB CDC On Boot                | Enabled                             |
@@ -189,72 +228,130 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 
 ## 引脚总览
 
-| LCD引脚       | ESP32S3引脚      |
-| :------------------: | :------------------:|
-| MOSI                     | IO35                  |
-| SCLK                  | IO36                  |
-| RST                    | IO33                  |
-| BL                      | IO46                  |
-| CS                    | IO34                  |
-| DC                    | IO45                  |
+> #### T-CameraPlus-S3_V1.0-V1.1 版本
+>> | LCD引脚       | ESP32S3引脚      |
+>> | :------------------: | :------------------:|
+>> | MOSI                     | IO35                  |
+>> | SCLK                  | IO36                  |
+>> | RST                    | IO33                  |
+>> | BL                      | IO46                  |
+>> | CS                    | IO34                  |
+>> | DC                    | IO45                  |
+>
+>> | IIS麦克风MSM261S4030H0R引脚 | ESP32S3引脚      |
+>> | :------------------: | :------------------:|
+>> | BCLK                  | IO18                  |
+>> | WS                  | IO39                    |
+>> | DATA                  | IO40                  |
+>
+>> | 功放MAX98357A引脚          | ESP32S3引脚      |
+>> | :------------------: | :------------------:|
+>> | BCLK                  | IO41                  |
+>> | LRCLK                  | IO42                    |
+>> | DATA                  | IO38                  |
+>
+>> | SD卡引脚          | ESP32S3引脚      |
+>> | :------------------: | :------------------:|
+>> | CS                  | IO21                  |
+>> | SCLK                  | IO36                    |
+>> | MOSI                  | IO35                  |
+>> | MISO                  | IO37                  |
+>
+>> | 电源芯片SY6970引脚          | ESP32S3引脚      |
+>> | :------------------: | :------------------:|
+>> | SDA                  | IO1                  |
+>> | SCL                  | IO2                    |
+>> | INT                  | IO47                  |
+>
+>> | 摄像头OV2640引脚          | ESP32S3引脚      |
+>> | :------------------: | :------------------:|
+>> | RESET                  | IO3                  |
+>> | XCLK                  | IO7                    |
+>> | SIDO                  | IO1                  |
+>> | SIOC                  | IO2                    |
+>> | D7                  | IO6                  |
+>> | D6                  | IO8                    |
+>> | D5                  | IO9                  |
+>> | D4                  | IO11                    |
+>> | D3                  | IO13                  |
+>> | D2                  | IO15                    |
+>> | D1                  | IO14                  |
+>> | D0                  | IO12                  |
+>> | VSYNC             | IO4                  |
+>> | HREF                  | IO5                  |
+>> | PCLK                  | IO10                  |
+>
+>> | 触摸芯片引脚          | ESP32S3引脚      |
+>> | :------------------: | :------------------:|
+>> | SDA                  | IO1                  |
+>> | SCL                  | IO2                    |
+>> | RST                  | IO48                  |
+>> | INT                  | IO47                  |
 
-| 数字麦克风引脚 | ESP32S3引脚      |
-| :------------------: | :------------------:|
-| BCLK                  | IO18                  |
-| WS                  | IO39                    |
-| DIN                  | IO40                  |
 
-| 功放引脚          | ESP32S3引脚      |
-| :------------------: | :------------------:|
-| BCLK                  | IO41                  |
-| LRCLK                  | IO42                    |
-| DOUT                  | IO38                  |
+> #### T-CameraPlus-S3_V1.2 版本
+>> | LCD引脚       | ESP32S3引脚      |
+>> | :------------------: | :------------------:|
+>> | MOSI                     | IO34                  |
+>> | SCLK                  | IO35                  |
+>> | BL                      | IO46                  |
+>> | CS                    | IO36                  |
+>> | DC                    | IO45                  |
+>
+>> | PDM麦克风MP34DT05TR引脚 | ESP32S3引脚      |
+>> | :------------------: | :------------------:|
+>> | LRCLK                  | IO40                  |
+>> | DATA                  | IO38                  |
+>
+>> | 功放MAX98357A引脚          | ESP32S3引脚      |
+>> | :------------------: | :------------------:|
+>> | BCLK                  | IO41                  |
+>> | LRCLK                  | IO42                    |
+>> | DATA                  | IO39                  |
+>
+>> | SD卡引脚          | ESP32S3引脚      |
+>> | :------------------: | :------------------:|
+>> | CS                  | IO21                  |
+>> | SCLK                  | IO35                    |
+>> | MOSI                  | IO34                  |
+>> | MISO                  | IO48                  |
+>
+>> | 电源芯片SY6970引脚          | ESP32S3引脚      |
+>> | :------------------: | :------------------:|
+>> | SDA                  | IO33                  |
+>> | SCL                  | IO37                    |
+>
+>> | 摄像头OV2640引脚          | ESP32S3引脚      |
+>> | :------------------: | :------------------:|
+>> | XCLK                  | IO7                    |
+>> | SIDO                  | IO1                  |
+>> | SIOC                  | IO2                    |
+>> | D7                  | IO6                  |
+>> | D6                  | IO8                    |
+>> | D5                  | IO9                  |
+>> | D4                  | IO11                    |
+>> | D3                  | IO13                  |
+>> | D2                  | IO15                    |
+>> | D1                  | IO14                  |
+>> | D0                  | IO12                  |
+>> | VSYNC             | IO3                  |
+>> | HREF                  | IO5                  |
+>> | PCLK                  | IO10                  |
+>> | PWDN                  | IO4                  |
+>
+>> | 触摸芯片引脚          | ESP32S3引脚      |
+>> | :------------------: | :------------------:|
+>> | SDA                  | IO33                  |
+>> | SCL                  | IO37                    |
+>> | INT                  | IO47                  |
 
-| SD卡引脚          | ESP32S3引脚      |
-| :------------------: | :------------------:|
-| CS                  | IO21                  |
-| SCLK                  | IO36                    |
-| MOSI                  | IO35                  |
-| MISO                  | IO37                  |
-
-| 电源芯片引脚          | ESP32S3引脚      |
-| :------------------: | :------------------:|
-| SDA                  | IO1                  |
-| SCL                  | IO2                    |
-| INT                  | IO47                  |
-
-| 摄像头引脚          | ESP32S3引脚      |
-| :------------------: | :------------------:|
-| RESET                  | IO3                  |
-| XCLK                  | IO7                    |
-| SIDO                  | IO1                  |
-| SIOC                  | IO2                    |
-| D7                  | IO6                  |
-| D6                  | IO8                    |
-| D5                  | IO9                  |
-| D4                  | IO11                    |
-| D3                  | IO13                  |
-| D2                  | IO15                    |
-| D1                  | IO14                  |
-| D0                  | IO12                  |
-| VSYNC             | IO4                  |
-| HREF                  | IO5                  |
-| PCLK                  | IO10                  |
-
-| 触摸芯片引脚          | ESP32S3引脚      |
-| :------------------: | :------------------:|
-| SDA                  | IO1                  |
-| SCL                  | IO2                    |
-| RST                  | IO48                  |
-| INT                  | IO47                  |
-
-| 控制摄像头红外滤镜开关引脚     | ESP32S3引脚      |
+| 控制摄像头OV2640红外滤镜开关引脚     | ESP32S3引脚      |
 | :------------------: | :------------------:|
 | AP1511B_FBC                  | IO16                  |
 
-| 按键引脚     | ESP32S3引脚      |
+| 按键KEY1引脚     | ESP32S3引脚      |
 | :------------------: | :------------------:|
-| KEY                  | IO17                  |
+| KEY1                  | IO17                  |
 
 ## 常见问题
 
@@ -277,26 +374,5 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 * A. 请按住“BOOT”按键重新下载程序。
 
 ## 项目
-* [SCH_T-CameraPlus-S3_V1.1](project/SCH_T-CameraPlus-S3_V1.1_20241109.pdf)
-
-## 资料
-* [Espressif](https://www.espressif.com/en/support/documents/technical-documents)
-* [AN_SY6970 ](information/AN_SY6970.pdf)
-* [EVB_SY6970](information/EVB_SY6970.pdf)
-* [AN-CST816T-v1](information/AN-CST816T-v1.pdf)
-* [FS2011NB0807-H3.9-R01](information/FS2011NB0807-H3.9-R01.pdf)
-* [MSM261S4030H0R](information/MSM261S4030H0R.pdf)
-* [OV2640_Hardware_Application_V1.04](information/OV2640_Hardware_Application_V1.04.pdf)
-* [OV2640_Software_Application_V1.03](information/OV2640_Software_Application_V1.03.pdf)
-
-## 依赖库
-* [Arduino_GFX-1.3.7](https://github.com/moononournation/Arduino_GFX)
-* [lvgl-8.3.5](https://github.com/lvgl/lvgl)
-* [arduino-libhelix-0.8.1](https://github.com/pschatzmann/arduino-libhelix)
-* [cst816t-1.5.0](https://github.com/koendv/cst816t)
-* [DFRobot_MSM261](https://github.com/DFRobot/DFrobot_MSM261)
-* [ESP32-audioI2S-3.0.6](https://github.com/schreibfaul1/ESP32-audioI2S)
-* [JPEGDEC-1.2.8](https://github.com/bitbank2/JPEGDEC)
-* [MiniTV](https://github.com/moononournation/MiniTV)
-* [XPowersLib-0.2.1](https://github.com/lewisxhe/XPowersLib)
-* [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)
+* [T-CameraPlus-S3_V1.0-V1.1](project/T-CameraPlus-S3_V1.0-V1.1_20241109.pdf)
+* [T-CameraPlus-S3_V1.2](project/T-CameraPlus-S3_V1.2_20240417.pdf)

@@ -1,17 +1,11 @@
 /*
- * @Description(CN):
- *      SD卡播放音乐
- *
- * @Description(EN):
- *      SD Card Music Playback
- *
- * @version: V1.0.0
+ * @Description: SD Card Music Playback
  * @Author: LILYGO_L
- * @Date: 2023-08-17 14:58:20
- * @LastEditors: LILYGO_L
- * @LastEditTime: 2023-12-12 11:31:33
+ * @Date: 2024-11-11 11:36:48
+ * @LastEditTime: 2025-04-03 09:48:43
  * @License: GPL 3.0
  */
+
 #include "Arduino.h"
 #include "WiFiMulti.h"
 #include "Audio.h"
@@ -79,16 +73,20 @@ void setup()
     Serial.begin(115200);
     Serial.println("Ciallo");
 
+    #ifdef T_CameraPlus_S3_V1_2
+    pinMode(MP34DT05TR_MAX98357_EN, OUTPUT);
+    digitalWrite(MP34DT05TR_MAX98357_EN, LOW);
+    #endif
+
     pinMode(LCD_CS, OUTPUT);
     digitalWrite(LCD_CS, HIGH);
     // pinMode(PIN_SD_MISO, INPUT_PULLUP);                         // MISO pull-up resistor
     SPI.begin(SCLK, MISO, MOSI, SD_CS); // SPI boots
 
-    SD.begin(SD_CS, SPI, 40000000);
+    SD.begin(SD_CS, SPI, 4000000);
 
-    audio.setPinout(MAX98357A_BCLK, MAX98357A_LRCLK, MAX98357A_DOUT);
-    audio.setVolume(11);   // 0...21,Volume setting
-    audio.forceMono(true); // change stereo to mono
+    audio.setPinout(MAX98357A_BCLK, MAX98357A_LRCLK, MAX98357A_DATA);
+    audio.setVolume(21);   // 0...21,Volume setting
     // audio.setBalance(-16);
 
     playNextAudio();

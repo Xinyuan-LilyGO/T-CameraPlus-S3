@@ -7,12 +7,11 @@
  *
  * @Author: LILYGO_L
  * @Date: 2023-09-22 11:59:37
- * @LastEditTime: 2025-01-02 10:26:08
+ * @LastEditTime: 2025-04-25 09:18:43
  * @License: GPL 3.0
  */
 #include "lvgl.h"
 #include "Arduino_GFX_Library.h"
-#include "cst816t.h"
 #include "pin_config.h"
 #include "gui_guider.h"
 #include "events_init.h"
@@ -25,6 +24,18 @@
 #include "MSM261.h"
 #include "material_16Bit.h"
 
+#define SOFTWARE_NAME "Original_Test"
+
+#define SOFTWARE_LASTEDITTIME "202504081446"
+
+#ifdef T_CameraPlus_S3_V1_0_V1_1
+#define BOARD_VERSION "V1.0-V1.1"
+#elif defined T_CameraPlus_S3_V1_2
+#define BOARD_VERSION "V1.2"
+#else
+#error "Unknown macro definition. Please select the correct macro definition."
+#endif
+
 static uint64_t screenWidth = 240;  // screenWidth
 static uint64_t screenHeight = 240; // screenHeight
 
@@ -36,6 +47,8 @@ static uint64_t SY6970_CycleTime2 = 0;
 
 static uint64_t OV2640_CycleTime1 = 0;
 
+TaskHandle_t Audio_Task_Handle = NULL;
+
 // fp-133h01d
 Arduino_DataBus *bus = new Arduino_HWSPI(
     LCD_DC /* DC */, LCD_CS /* CS */, LCD_SCLK /* SCK */, LCD_MOSI /* MOSI */, -1 /* MISO */);
@@ -45,7 +58,13 @@ Arduino_GFX *gfx = new Arduino_ST7789(
     LCD_WIDTH /* width */, LCD_HEIGHT /* height */,
     0 /* col offset 1 */, 0 /* row offset 1 */, 0 /* col_offset2 */, 0 /* row_offset2 */);
 
-cst816t touchpad(TP_RST);
+std::shared_ptr<Arduino_IIC_DriveBus> IIC_Bus =
+    std::make_shared<Arduino_HWIIC>(IIC_SDA, IIC_SCL, &Wire);
+
+void Arduino_IIC_Touch_Interrupt(void);
+
+std::unique_ptr<Arduino_IIC> CST816D(new Arduino_CST816x(IIC_Bus, CST816D_DEVICE_ADDRESS,
+                                                         TP_RST, TP_INT, Arduino_IIC_Touch_Interrupt));
 
 lv_ui guider_ui;
 My_Lvgl_UI My_UI;
@@ -53,6 +72,11 @@ My_Lvgl_UI My_UI;
 static lv_disp_draw_buf_t draw_buf;
 static lv_color_t *disp_draw_buf;
 static lv_disp_drv_t disp_drv;
+
+void Arduino_IIC_Touch_Interrupt(void)
+{
+    CST816D->IIC_Interrupt_Flag = true;
+}
 
 /* Display flushing */
 void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
@@ -72,29 +96,30 @@ void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color
 /*Read the touchpad*/
 void my_touchpad_read(lv_indev_drv_t *indev_drv, lv_indev_data_t *data)
 {
-    if (touchpad.available())
+    if (CST816D->IIC_Interrupt_Flag == true)
     {
-        if (touchpad.finger_num > 0)
+        if ((uint32_t)CST816D->IIC_Read_Device_Value(CST816D->Arduino_IIC_Touch::Value_Information::TOUCH_FINGER_NUMBER) > 0)
         {
             data->state = LV_INDEV_STATE_PR;
 
             /*Set the coordinates*/
-            data->point.x = touchpad.x;
-            data->point.y = touchpad.y;
+            data->point.x = (uint32_t)CST816D->IIC_Read_Device_Value(CST816D->Arduino_IIC_Touch::Value_Information::TOUCH_COORDINATE_X);
+            data->point.y = (uint32_t)CST816D->IIC_Read_Device_Value(CST816D->Arduino_IIC_Touch::Value_Information::TOUCH_COORDINATE_Y);
 
             // Serial.print("Data x ");
-            // Serial.println(touchpad.x);
+            // Serial.println((uint32_t)CST816D->IIC_Read_Device_Value(CST816D->Arduino_IIC_Touch::Value_Information::TOUCH_COORDINATE_X));
 
             // Serial.print("Data y ");
-            // Serial.println(touchpad.y);
-        }
-        else
-        {
-            data->state = LV_INDEV_STATE_REL;
+            // Serial.println((uint32_t)CST816D->IIC_Read_Device_Value(CST816D->Arduino_IIC_Touch::Value_Information::TOUCH_COORDINATE_Y));
+
+            CST816D->IIC_Interrupt_Flag = false;
         }
     }
+    else
+    {
+        data->state = LV_INDEV_STATE_REL;
+    }
 }
-
 void lvgl_initialization(void)
 {
     lv_init();
@@ -102,15 +127,17 @@ void lvgl_initialization(void)
     screenWidth = gfx->width();
     screenHeight = gfx->height();
 
-    disp_draw_buf = (lv_color_t *)heap_caps_malloc(sizeof(lv_color_t) * screenWidth * 40, MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT);
+    // 使用PSRAM分配内存
+    lv_color_t *buf_1 = (lv_color_t *)heap_caps_malloc(sizeof(lv_color_t) * LCD_WIDTH * 1024, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+    lv_color_t *buf_2 = (lv_color_t *)heap_caps_malloc(sizeof(lv_color_t) * LCD_WIDTH * 1024, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
 
-    while (!disp_draw_buf)
+    while ((!buf_1) || (!buf_2))
     {
         Serial.println("LVGL disp_draw_buf allocate failed!");
         delay(1000);
     }
 
-    lv_disp_draw_buf_init(&draw_buf, disp_draw_buf, NULL, screenWidth * 40);
+    lv_disp_draw_buf_init(&draw_buf, buf_1, buf_2, LCD_WIDTH * 1024);
 
     /* Initialize the display */
     lv_disp_drv_init(&disp_drv);
@@ -119,6 +146,7 @@ void lvgl_initialization(void)
     disp_drv.ver_res = screenHeight;
     disp_drv.flush_cb = my_disp_flush;
     disp_drv.draw_buf = &draw_buf;
+    disp_drv.full_refresh = 1; // 双缓冲全像素刷新
     lv_disp_drv_register(&disp_drv);
 
     /*Initialize the (dummy) input device driver*/
@@ -131,11 +159,14 @@ void lvgl_initialization(void)
 
 void setup()
 {
+    Serial.begin(115200);
+    Serial.println("Ciallo");
+    Serial.println("[T-CameraPlus-S3_" + (String)BOARD_VERSION "][" + (String)SOFTWARE_NAME +
+                   "]_firmware_" + (String)SOFTWARE_LASTEDITTIME);
+
     // 摄像头必须第一个初始化
     OV2640_Initialization(OV2640_Pixel_Format::PIXFORMAT_JPEG);
     // OV2640_Initialization(OV2640_Pixel_Format::PIXFORMAT_RGB565); // 需要屏幕显示摄像头数据时取消注释这个
-
-    Serial.begin(115200);
 
     AP1511_Initialization();
 
@@ -148,13 +179,23 @@ void setup()
     pinMode(LCD_CS, OUTPUT);
     digitalWrite(LCD_CS, HIGH);
     // pinMode(PIN_SD_MISO, INPUT_PULLUP);                         // MISO pull-up resistor
-    SPI.begin(SCLK, MISO, MOSI, SD_CS); // SPI boots
+    SPI.begin(SPI_SCLK, SPI_MISO, SPI_MOSI, SD_CS); // SPI boots
 
-    // Init Display
+// Init Display
+#ifdef T_CameraPlus_S3_V1_0_V1_1
     if (!gfx->begin())
     {
         Serial.println("gfx->begin() failed!");
     }
+#elif defined T_CameraPlus_S3_V1_2
+    if (!gfx->begin(80000000))
+    {
+        Serial.println("gfx->begin() failed!");
+    }
+#else
+#error "Unknown macro definition. Please select the correct macro definition."
+#endif
+
     gfx->fillScreen(BLACK);
     gfx->draw16bitRGBBitmap(0, 0, (uint16_t *)gImage_1, 240, 240);
 
@@ -182,8 +223,18 @@ void setup()
 
     MSM261_Initialization();
 
-    Wire.begin(TP_SDA, TP_SCL);
-    touchpad.begin(&Wire, mode_motion);
+    if (CST816D->begin() == false)
+    {
+        Serial.println("CST816D initialization fail");
+    }
+    else
+    {
+        Serial.println("CST816D initialization successfully");
+
+        // 中断模式为检测到触摸时，发出低脉冲
+        CST816D->IIC_Write_Device_State(CST816D->Arduino_IIC_Touch::Device::TOUCH_DEVICE_INTERRUPT_MODE,
+                                        CST816D->Arduino_IIC_Touch::Device_Mode::TOUCH_DEVICE_INTERRUPT_PERIODIC);
+    }
 
     lvgl_initialization();
 
@@ -194,7 +245,7 @@ void setup()
 void loop()
 {
     lv_timer_handler(); /* let the GUI do its work */
-                        // delay(5);
+    // delay(5);
 
     if (micros() > MAX98357A_CycleTime1)
     {

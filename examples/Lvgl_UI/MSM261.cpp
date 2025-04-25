@@ -3,12 +3,10 @@
  * @version: V1.0.0
  * @Author: LILYGO_L
  * @Date: 2023-10-19 13:57:54
- * @LastEditors: LILYGO_L
- * @LastEditTime: 2024-06-14 22:52:48
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2025-04-03 17:13:34
  * @License: GPL 3.0
  */
-
-#include "DFrobot_MSM261.h"
 #include "pin_config.h"
 #include "custom.h"
 
@@ -34,16 +32,53 @@ byte Wave_Header[MICROPHONE_HEADER_SIZE]; // WAVE文件的文件头
 char Wave_CommunicationData[MICROPHONE_NUM_COMMUNICATION_DATA];
 
 File file;
-DFRobot_Microphone microphone(MSM261_BCLK, MSM261_WS, MSM261_DIN);
+#ifdef T_CameraPlus_S3_V1_0_V1_1
+std::shared_ptr<Arduino_IIS_DriveBus> IIS_Bus =
+    std::make_shared<Arduino_HWIIS>(I2S_NUM_0, MSM261_BCLK, MSM261_WS, MSM261_DATA);
+#elif defined T_CameraPlus_S3_V1_2
+std::shared_ptr<Arduino_IIS_DriveBus> IIS_Bus =
+    std::make_shared<Arduino_HWIIS>(I2S_NUM_0, -1, MP34DT05TR_LRCLK, MP34DT05TR_DATA);
+#else
+#error "Unknown macro definition. Please select the correct macro definition."
+#endif
+
+std::unique_ptr<Arduino_IIS> IIS(new Arduino_MEMS(IIS_Bus));
 
 void MSM261_Initialization(void)
 {
-    if (microphone.begin(MICROPHONE_SAMPLE_RATE, MICROPHONE_DATA_BIT) != 0)
+#ifdef T_CameraPlus_S3_V1_0_V1_1
+    if (IIS->begin(i2s_mode_t::I2S_MODE_MASTER, ad_iis_data_mode_t::AD_IIS_DATA_IN, i2s_channel_fmt_t::I2S_CHANNEL_FMT_RIGHT_LEFT,
+                   MICROPHONE_DATA_BIT, MICROPHONE_SAMPLE_RATE) == false)
     {
+        Serial.println("MSM261 initialization fail");
         My_UI.MSM261_Initialization_Flag = false;
     }
+    else
+    {
+        Serial.println("MSM261 initialization successfully");
+        My_UI.MSM261_Initialization_Flag = true;
+    }
 
-    My_UI.MSM261_Initialization_Flag = true;
+#elif defined T_CameraPlus_S3_V1_2
+
+    pinMode(MP34DT05TR_MAX98357_EN, OUTPUT);
+    digitalWrite(MP34DT05TR_MAX98357_EN, LOW);
+
+    if (IIS->begin(i2s_mode_t::I2S_MODE_PDM, ad_iis_data_mode_t::AD_IIS_DATA_IN, i2s_channel_fmt_t::I2S_CHANNEL_FMT_RIGHT_LEFT,
+                   MICROPHONE_DATA_BIT, MICROPHONE_SAMPLE_RATE) == false)
+    {
+        Serial.println("MP34DT05TR initialization fail");
+        My_UI.MSM261_Initialization_Flag = false;
+    }
+    else
+    {
+        Serial.println("MP34DT05TR initialization successfully");
+        My_UI.MSM261_Initialization_Flag = true;
+    }
+
+#else
+#error "Unknown macro definition. Please select the correct macro definition."
+#endif
 }
 
 void MSM261_Loop(void)
@@ -109,16 +144,16 @@ void MSM261_Loop(void)
 
             // My_UI.MSM261_Recording_Flag = My_UI.MSM261_Recording_OFF;
             // }
-            
+
             if (MSM261_CycleTime < millis())
             {
                 char temp_iis_read_buff[200] = {0};
                 String temp;
 
-                microphone.read(temp_iis_read_buff, 100);
+                IIS->IIS_Read_Data(temp_iis_read_buff, 100);
 
-                temp = "Left : " + (String)((int16_t)((int16_t)temp_iis_read_buff[0] | (int16_t)temp_iis_read_buff[1] << 8)) + "\n";
-                temp += "Right : " + (String)((int16_t)((int16_t)temp_iis_read_buff[2] | (int16_t)temp_iis_read_buff[3] << 8)) + "\n";
+                // temp = "left data: " + (String)((int16_t)((int16_t)temp_iis_read_buff[0] | (int16_t)temp_iis_read_buff[1] << 8)) + "\n";
+                temp += "right data: " + (String)((int16_t)((int16_t)temp_iis_read_buff[2] | (int16_t)temp_iis_read_buff[3] << 8)) + "\n";
 
                 lv_label_set_text(guider_ui.Recorder_tabview_1_tab_1_label, temp.c_str());
                 // Update current screen layout.

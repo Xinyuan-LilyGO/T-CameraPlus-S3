@@ -3,8 +3,8 @@
  * @version: V1.0.0
  * @Author: LILYGO_L
  * @Date: 2023-10-18 17:31:49
- * @LastEditors: LILYGO_L
- * @LastEditTime: 2024-01-24 17:27:56
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2025-04-03 17:24:46
  * @License: GPL 3.0
  */
 #include <WiFi.h>
@@ -39,7 +39,7 @@ bool OV2640_Initialization(OV2640_Pixel_Format pixel_format)
     config.pin_pwdn = PWDN_GPIO_NUM;
     config.pin_reset = RESET_GPIO_NUM;
     config.xclk_freq_hz = 20000000;
-    config.frame_size = FRAMESIZE_HVGA;
+    config.frame_size = FRAMESIZE_SVGA;
     config.pixel_format = (pixformat_t)pixel_format; // for streaming PIXFORMAT_JPEG
     // config.pixel_format = PIXFORMAT_RGB565; // for face detection/recognition
     config.grab_mode = CAMERA_GRAB_WHEN_EMPTY;

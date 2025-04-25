@@ -3,8 +3,8 @@
  * @version: V1.0.0
  * @Author: LILYGO_L
  * @Date: 2023-08-16 15:19:01
- * @LastEditors: LILYGO_L
- * @LastEditTime: 2023-12-12 11:33:11
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2025-04-02 16:21:48
  * @License: GPL 3.0
  */
 #include "Arduino.h"
@@ -42,6 +42,7 @@ void wifi_test(void)
     WiFi.mode(WIFI_STA);
     WiFi.disconnect();
     delay(100);
+    WiFi.setTxPower(wifi_power_t::WIFI_POWER_19_5dBm);
 
     wifi_num = WiFi.scanNetworks();
     if (wifi_num == 0)

@@ -4,7 +4,7 @@
  * @Author: LILYGO_L
  * @Date: 2023-10-06 10:54:55
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2024-11-20 14:34:03
+ * @LastEditTime: 2025-04-07 09:49:11
  * @License: GPL 3.0
  */
 #pragma once
@@ -15,6 +15,7 @@
 #include <SD.h>
 #include "Audio.h"
 #include "OV2640_Camera.h"
+#include "Arduino_DriveBus_Library.h"
 
 class My_Lvgl_UI
 {
@@ -248,3 +249,5 @@ void custom_init(lv_ui *ui);
 extern Arduino_Explorer AE_Class;
 extern My_Lvgl_UI My_UI;
 extern Audio audio;
+
+extern TaskHandle_t Audio_Task_Handle;

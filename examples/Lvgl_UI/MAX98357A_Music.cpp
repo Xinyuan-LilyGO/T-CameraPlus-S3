@@ -3,8 +3,8 @@
  * @version: V1.0.0
  * @Author: LILYGO_L
  * @Date: 2023-10-12 14:46:04
- * @LastEditors: LILYGO_L
- * @LastEditTime: 2023-10-17 19:02:48
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2025-04-07 09:55:52
  * @License: GPL 3.0
  */
 #include "Audio.h"
@@ -12,11 +12,16 @@
 #include "custom.h"
 #include "MAX98357A_Music.h"
 
-Audio audio;
+Audio audio(false, 3, I2S_NUM_1);
 
 void MAX98357A_Initialization(void)
 {
-    audio.setPinout(MAX98357A_BCLK, MAX98357A_LRCLK, MAX98357A_DOUT);
+#ifdef T_CameraPlus_S3_V1_2
+    pinMode(MP34DT05TR_MAX98357_EN, OUTPUT);
+    digitalWrite(MP34DT05TR_MAX98357_EN, LOW);
+#endif
+
+    audio.setPinout(MAX98357A_BCLK, MAX98357A_LRCLK, MAX98357A_DATA);
     audio.setVolume(My_UI.System_Volume); // 0...21,Volume setting
     audio.forceMono(true);                // change stereo to mono
     // audio.setBalance(-16);

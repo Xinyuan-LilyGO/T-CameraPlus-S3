@@ -1,192 +1,137 @@
 /*
- * @Description: SY6970.cpp
- * @version: V1.0.0
- * @Author: Lewis He (lewishe@outlook.com)
- * @Date: 2023-09-13 14:32:42
- * @LastEditors: LILYGO_L
- * @LastEditTime: 2023-12-12 11:32:08
+ * @Description: None
+ * @Author: LILYGO_L
+ * @Date: 2025-04-03 14:11:27
+ * @LastEditTime: 2025-04-03 14:11:41
  * @License: GPL 3.0
  */
-#include <XPowersLib.h>
+#include "Arduino_DriveBus_Library.h"
+#include "pin_config.h"
 
-PowersSY6970 PMU;
+std::shared_ptr<Arduino_IIC_DriveBus> IIC_Bus =
+    std::make_shared<Arduino_HWIIC>(IIC_SDA, IIC_SCL, &Wire);
 
-#define CONFIG_PMU_SDA 1
-#define CONFIG_PMU_SCL 2
-#define CONFIG_PMU_IRQ 47
+std::unique_ptr<Arduino_IIC> SY6970(new Arduino_SY6970(IIC_Bus, SY6970_DEVICE_ADDRESS,
+                                                       DRIVEBUS_DEFAULT_VALUE, DRIVEBUS_DEFAULT_VALUE));
 
-const uint8_t i2c_sda = CONFIG_PMU_SDA;
-const uint8_t i2c_scl = CONFIG_PMU_SCL;
-const uint8_t pmu_irq_pin = CONFIG_PMU_IRQ;
-uint32_t cycleInterval;
-
-bool OTG_Flag = 0;
+static bool Temp1 = 0;
 
 void setup()
 {
     Serial.begin(115200);
-    pinMode(GPIO_NUM_17, INPUT_PULLUP);
+    Serial.println("Ciallo");
 
-    bool result = PMU.init(Wire, i2c_sda, i2c_scl, SY6970_SLAVE_ADDRESS);
-
-    if (result == false)
+    while (SY6970->begin() == false)
     {
-        while (1)
-        {
-            Serial.println("PMU is not online...");
-            delay(50);
-        }
+        Serial.println("SY6970 initialization fail");
+        delay(2000);
     }
+    Serial.println("SY6970 initialization successfully");
 
-    // To obtain voltage data, the ADC must be enabled first
-    PMU.enableADCMeasure();
+    // 开启ADC测量功能
+    while (SY6970->IIC_Write_Device_State(SY6970->Arduino_IIC_Power::Device::POWER_DEVICE_ADC_MEASURE,
+                                          SY6970->Arduino_IIC_Power::Device_State::POWER_DEVICE_ON) == false)
+    {
+        Serial.println("SY6970 ADC Measure ON fail");
+        delay(2000);
+    }
+    Serial.println("SY6970 ADC Measure ON successfully");
 
-    // Set Charge Voltage Limit, Range:3840 ~ 4608mV ,step:16 mV
-    PMU.setChargeTargetVoltage(4208);
-
-    // Set Fast Charge Current Limit, Range:0~5056mA ,step:64mA
-    PMU.setChargerConstantCurr(320); // 普通锂电池限制充电450mA
-
-    // Set Precharge Current Limit , Range: 64mA ~ 1024mA ,step:64mA
-    PMU.setPrechargeCurr(192);
-
-    // Set Termination Current Limit , Range: 64mA ~ 1024mA ,step:64mA
-    PMU.setTerchargeCurr(128);
-
-    // The OTG function needs to enable OTG, and set the OTG control pin to HIGH
-    // After OTG is enabled, if an external power supply is plugged in, OTG will be turned off
-
-    // PMU.enableOTG();
-    // PMU.disableOTG();
-    // pinMode(OTG_ENABLE_PIN, OUTPUT);
-    // digitalWrite(OTG_ENABLE_PIN, HIGH);
+    // 禁用看门狗定时器喂狗功能
+    SY6970->IIC_Write_Device_Value(SY6970->Arduino_IIC_Power::Device_Value::POWER_DEVICE_WATCHDOG_TIMER, 0);
+    // 热调节阈值设置为60度
+    SY6970->IIC_Write_Device_Value(SY6970->Arduino_IIC_Power::Device_Value::POWER_DEVICE_THERMAL_REGULATION_THRESHOLD, 60);
+    // 充电目标电压电压设置为4224mV
+    SY6970->IIC_Write_Device_Value(SY6970->Arduino_IIC_Power::Device_Value::POWER_DEVICE_CHARGING_TARGET_VOLTAGE_LIMIT, 4224);
+    // 最小系统电压限制为3600mA
+    SY6970->IIC_Write_Device_Value(SY6970->Arduino_IIC_Power::Device_Value::POWER_DEVICE_MINIMUM_SYSTEM_VOLTAGE_LIMIT, 3600);
+    // 设置OTG电压为5062mV
+    SY6970->IIC_Write_Device_Value(SY6970->Arduino_IIC_Power::Device_Value::POWER_DEVICE_OTG_VOLTAGE_LIMIT, 5062);
+    // 输入电流限制设置为600mA
+    SY6970->IIC_Write_Device_Value(SY6970->Arduino_IIC_Power::Device_Value::POWER_DEVICE_INPUT_CURRENT_LIMIT, 600);
+    // 快速充电电流限制设置为2112mA
+    SY6970->IIC_Write_Device_Value(SY6970->Arduino_IIC_Power::Device_Value::POWER_DEVICE_FAST_CHARGING_CURRENT_LIMIT, 2112);
+    // 预充电电流限制设置为192mA
+    SY6970->IIC_Write_Device_Value(SY6970->Arduino_IIC_Power::Device_Value::POWER_DEVICE_PRECHARGE_CHARGING_CURRENT_LIMIT, 192);
+    // 终端充电电流限制设置为320mA
+    SY6970->IIC_Write_Device_Value(SY6970->Arduino_IIC_Power::Device_Value::POWER_DEVICE_TERMINATION_CHARGING_CURRENT_LIMIT, 320);
+    // OTG电流限制设置为500mA
+    SY6970->IIC_Write_Device_Value(SY6970->Arduino_IIC_Power::Device_Value::POWER_DEVICE_OTG_CHARGING_LIMIT, 500);
 }
 
 void loop()
 {
-    if (digitalRead(GPIO_NUM_17) == 0)
+    Serial.printf("--------------------SY6970--------------------\n");
+    Serial.printf("System running time: %d\n\n", (uint32_t)millis() / 1000);
+    Serial.printf("IIC_Bus.use_count(): %d\n\n", (int32_t)IIC_Bus.use_count());
+
+    Serial.printf("IIC device ID: %#X \n", (int32_t)SY6970->IIC_Device_ID());
+
+    Serial.printf("\nBUS Status: %s \n",
+                  (SY6970->IIC_Read_Device_State(SY6970->Arduino_IIC_Power::Status_Information::POWER_BUS_STATUS)).c_str());
+    Serial.printf("BUS Connection Status: %s \n",
+                  (SY6970->IIC_Read_Device_State(SY6970->Arduino_IIC_Power::Status_Information::POWER_BUS_CONNECTION_STATUS)).c_str());
+    Serial.printf("Charging Status: %s \n",
+                  (SY6970->IIC_Read_Device_State(SY6970->Arduino_IIC_Power::Status_Information::POWER_CHARGING_STATUS)).c_str());
+    Serial.printf("Input Source Status: %s \n",
+                  (SY6970->IIC_Read_Device_State(SY6970->Arduino_IIC_Power::Status_Information::POWER_INPUT_SOURCE_STATUS)).c_str());
+    Serial.printf("Input USB Status: %s \n",
+                  (SY6970->IIC_Read_Device_State(SY6970->Arduino_IIC_Power::Status_Information::POWER_INPUT_USB_STATUS)).c_str());
+    Serial.printf("System Voltage Status: %s \n",
+                  (SY6970->IIC_Read_Device_State(SY6970->Arduino_IIC_Power::Status_Information::POWER_SYSTEM_VOLTAGE_STATUS)).c_str());
+    Serial.printf("Thermal Regulation Status: %s \n",
+                  (SY6970->IIC_Read_Device_State(SY6970->Arduino_IIC_Power::Status_Information::POWER_THERMAL_REGULATION_STATUS)).c_str());
+
+    Serial.printf("\nWatchdog Fault Status: %s \n",
+                  (SY6970->IIC_Read_Device_State(SY6970->Arduino_IIC_Power::Status_Information::POWER_WATCHDOG_FAULT_STATUS)).c_str());
+    Serial.printf("OTG Fault Status: %s \n",
+                  (SY6970->IIC_Read_Device_State(SY6970->Arduino_IIC_Power::Status_Information::POWER_OTG_FAULT_STATUS)).c_str());
+    Serial.printf("Charging Fault Status: %s \n",
+                  (SY6970->IIC_Read_Device_State(SY6970->Arduino_IIC_Power::Status_Information::POWER_CHARGING_FAULT_STATUS)).c_str());
+    Serial.printf("Battery Fault Status: %s \n",
+                  (SY6970->IIC_Read_Device_State(SY6970->Arduino_IIC_Power::Status_Information::POWER_BATTERY_FAULT_STATUS)).c_str());
+    Serial.printf("NTC Fault Status: %s \n",
+                  (SY6970->IIC_Read_Device_State(SY6970->Arduino_IIC_Power::Status_Information::POWER_NTC_FAULT_STATUS)).c_str());
+
+    Serial.printf("\nInput Voltage: %d mV \n",
+                  (int32_t)SY6970->IIC_Read_Device_Value(SY6970->Arduino_IIC_Power::Value_Information::POWER_INPUT_VOLTAGE));
+    Serial.printf("Battery Voltage: %d mV \n",
+                  (int32_t)SY6970->IIC_Read_Device_Value(SY6970->Arduino_IIC_Power::Value_Information::POWER_BATTERY_VOLTAGE));
+    Serial.printf("System Voltage: %d mV \n",
+                  (int32_t)SY6970->IIC_Read_Device_Value(SY6970->Arduino_IIC_Power::Value_Information::POWER_SYSTEM_VOLTAGE));
+    Serial.printf("NTC Voltage Percentage: %.03f %% \n",
+                  (float)SY6970->IIC_Read_Device_Value(SY6970->Arduino_IIC_Power::Value_Information::POWER_NTC_VOLTAGE_PERCENTAGE) / 1000.0);
+    Serial.printf("Charging Current: %d mA \n",
+                  (int32_t)SY6970->IIC_Read_Device_Value(SY6970->Arduino_IIC_Power::Value_Information::POWER_CHARGING_CURRENT));
+    Serial.printf("Thermal Regulation Threshold: %d ^C \n",
+                  (int32_t)SY6970->IIC_Read_Device_Value(SY6970->Arduino_IIC_Power::Value_Information::POWER_THERMAL_REGULATION_THRESHOLD));
+
+    Serial.printf("\nCharging Voltage Limit: %d mV \n",
+                  (int32_t)SY6970->IIC_Read_Device_Value(SY6970->Arduino_IIC_Power::Value_Information::POWER_CHARGING_TARGET_VOLTAGE_LIMIT));
+    Serial.printf("Minimum System Voltage Limit: %d mV \n",
+                  (int32_t)SY6970->IIC_Read_Device_Value(SY6970->Arduino_IIC_Power::Value_Information::POWER_MINIMUM_SYSTEM_VOLTAGE_LIMIT));
+    Serial.printf("OTG Voltage Limit: %d mV \n",
+                  (int32_t)SY6970->IIC_Read_Device_Value(SY6970->Arduino_IIC_Power::Value_Information::POWER_OTG_VOLTAGE_LIMIT));
+    Serial.printf("Input Current Limit: %d mA \n",
+                  (int32_t)SY6970->IIC_Read_Device_Value(SY6970->Arduino_IIC_Power::Value_Information::POWER_INPUT_CURRENT_LIMIT));
+    Serial.printf("Fast Charge Current Limit: %d mA \n",
+                  (int32_t)SY6970->IIC_Read_Device_Value(SY6970->Arduino_IIC_Power::Value_Information::POWER_FAST_CHARGING_CURRENT_LIMIT));
+    Serial.printf("Precharge Charge Current Limit: %d mA \n",
+                  (int32_t)SY6970->IIC_Read_Device_Value(SY6970->Arduino_IIC_Power::Value_Information::POWER_PRECHARGE_CHARGING_CURRENT_LIMIT));
+    Serial.printf("Termination Charge Current Limit: %d mA \n",
+                  (int32_t)SY6970->IIC_Read_Device_Value(SY6970->Arduino_IIC_Power::Value_Information::POWER_TERMINATION_CHARGING_CURRENT_LIMIT));
+    Serial.printf("OTG Current Limit: %d mA \n",
+                  (int32_t)SY6970->IIC_Read_Device_Value(SY6970->Arduino_IIC_Power::Value_Information::POWER_OTG_CURRENT_LIMIT));
+
+    Serial.printf("--------------------SY6970--------------------\n\n");
+
+    delay(1000);
+
+    Temp1 = !Temp1;
+    if (Temp1 == 0)
     {
-        OTG_Flag = !OTG_Flag;
-
-        if (OTG_Flag == 0)
-        {
-            PMU.disableOTG();
-
-            // Set Charge Voltage Limit, Range:3840 ~ 4608mV ,step:16 mV
-            PMU.setChargeTargetVoltage(4208);
-
-            // Set Fast Charge Current Limit, Range:0~5056mA ,step:64mA
-            PMU.setChargerConstantCurr(320);
-
-            // Set Precharge Current Limit , Range: 64mA ~ 1024mA ,step:64mA
-            PMU.setPrechargeCurr(192);
-
-            // Set Termination Current Limit , Range: 64mA ~ 1024mA ,step:64mA
-            PMU.setTerchargeCurr(128);
-        }
-        if (OTG_Flag == 1)
-        {
-            PMU.enableOTG();
-        }
-        delay(1000);
     }
-
-    // SY6970 When VBUS is input, the battery voltage detection will not take effect
-    if (millis() > cycleInterval)
+    else
     {
-        Serial.printf("\n------------------------------------------------\n");
-
-        Serial.printf("%s\n", PMU.isVbusIn() ? "Connection successful" : "Connection failure");
-
-        Serial.printf("\n");
-
-        Serial.printf("Bus mode: %s \n", PMU.getBusStatusString());
-        Serial.printf("Charge mode: %s \n", PMU.getChargeStatusString());
-
-        Serial.printf("\n");
-
-        Serial.printf("Total supply voltage: %d mv\n", PMU.getVbusVoltage());
-        Serial.printf("Battery voltage: %d mv\n", PMU.getBattVoltage());
-        Serial.printf("System voltage: %d mv\n", PMU.getSystemVoltage());
-
-        Serial.printf("\n");
-
-        Serial.printf("Charge Voltage Limit: %d mv\n", PMU.getChargeTargetVoltage());
-        Serial.printf("Fast Charge Current Limit: %d ma\n", PMU.getChargerConstantCurr());
-        Serial.printf("Precharge Current Limit: %d ma\n", PMU.getPrechargeCurr());
-        Serial.printf("Termination Current Limit: %d ma\n", PMU.getTerchargeCurr());
-
-        Serial.printf("\n");
-
-        // Serial.printf("%s \n", PMU.getNTCStatusString());
-
-        // // Charge Mode Fault Status
-        // // Serial.printf("xxx:%d\n", PMU.isChargeNormal());
-        // switch (PMU.isChargeNormal())
-        // {
-        // case 0x00:
-        //     Serial.printf("Normal: Charge Mode is normal\n");
-        //     break;
-        // case 0x10:
-        //     Serial.printf("Error: Input fault (BUS OVP or VBAT<BUS<3.8V)\n");
-        //     break;
-        // case 0x18:
-        //     Serial.printf("Error: Charge Safety Timer Expiration\n");
-        //     break;
-        // case 0x20:
-        //     Serial.printf("Error: Thermal shutdown\n");
-        //     break;
-
-        // default:
-        //     break;
-        // }
-
-        // // Watchdog Fault status
-        // switch (PMU.isWatchdogNormal())
-        // {
-        // case 0:
-        //     Serial.printf("Error: Watchdog timer expiration\n");
-        //     break;
-        // case 1:
-        //     Serial.printf("Normal: Watch dog is normal\n");
-        //     break;
-
-        // default:
-        //     break;
-        // }
-
-        // // Boost Mode Fault Status
-        // switch (PMU.isBoostNormal())
-        // {
-        // case 0:
-        //     Serial.printf("Error: BUS overloaded in OTG, or BUS OVP, or battery is too low\n");
-        //     break;
-        // case 1:
-        //     Serial.printf("Normal: Boost Mode is normal\n");
-        //     break;
-
-        // default:
-        //     break;
-        // }
-
-        // // Battery Fault Status
-        // switch (PMU.isBatteryNormal())
-        // {
-        // case 0:
-        //     // BatOVP occurs when the full charge voltage value set by the charging IC
-        //     // in the presence of Vbus is less than the current battery voltage.
-        //     Serial.printf("Error: BAT OVP\n");
-        //     break;
-        // case 1:
-        //     Serial.printf("Normal: Battery Fault is normal\n");
-        //     break;
-
-        // default:
-        //     break;
-        // }
-
-        Serial.printf("------------------------------------------------\n");
-
-        cycleInterval = millis() + 2500;
     }
 }

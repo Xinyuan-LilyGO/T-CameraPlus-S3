@@ -2,7 +2,7 @@
  * @Description: None
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
- * @LastEditTime: 2024-11-19 18:33:44
+ * @LastEditTime: 2025-04-25 13:46:42
  * @License: GPL 3.0
 -->
 <h1 align = "center">T-CameraPlus-S3</h1>
@@ -20,16 +20,16 @@
 ## **English | [中文](./README_CN.md)**
 
 ## Version iteration:
-| Version                              | Update date                       |
-| :-------------------------------: | :-------------------------------: |
-| T-CameraPlus-S3_V1.0            | 2023-10-23                         |
-| T-CameraPlus-S3_V1.1            | 2023-11-20                         |
+| Version                               | Update date                       |Update description|
+| :-------------------------------: | :-------------------------------: |:--------------: |
+| T-CameraPlus-S3_V1.0-V1.1            | 2023-10-23                         |  Original version  |
+| T-CameraPlus-S3_V1.2            | 2025-04-17                         |Improve WiFi performance, modify the microphone model, and modify the pin number to optimize the routing.    |
 
 ## PurchaseLink
 
 | Product                     | SOC           |  FLASH  |  PSRAM   | Link                   |
 | :------------------------: | :-----------: |:-------: | :---------: | :------------------: |
-| T-CameraPlus-S3_V1.1   | ESP32S3 |   16M   | 8M|  [LILYGO Mall](https://www.lilygo.cc/products/t-camera-plus-s3?_pos=2&_sid=aa4cbdb34&_ss=r)  |
+| T-CameraPlus-S3_V1.0-1.1   | ESP32S3 |   16M   | 8M|  [LILYGO Mall](https://www.lilygo.cc/products/t-camera-plus-s3?_pos=2&_sid=aa4cbdb34&_ss=r)  |
 
 ## Directory
 - [Describe](#describe)
@@ -39,8 +39,6 @@
 - [PinOverview](#pinoverview)
 - [FAQ](#faq)
 - [Project](#project)
-- [Information](#information)
-- [DependentLibraries](#dependentlibraries)
 
 ## Describe
 
@@ -67,7 +65,8 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 * Chip: ESP32-S3
 * PSRAM: 8M
 * FLASH: 16M
-* Others: For more information, please visit[Espressif ESP32-S3 datasheet](https://www.espressif.com.cn/sites/default/files/documentation/esp32-s3_datasheet_en.pdf)
+* Relevant information:
+    >[Espressif](https://www.espressif.com/en/support/documents/technical-documents)
 
 ### 2. Screen
 
@@ -77,19 +76,31 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 * Screen Type: TFT
 * Driver Chip: ST7789V
 * Bus Communication Protocol: Standard SPI
+* Dependencies:
+    >[Arduino_GFX-1.3.7](https://github.com/moononournation/Arduino_GFX)
+    >[lvgl-8.3.5](https://github.com/lvgl/lvgl)
+    >[JPEGDEC-1.2.8](https://github.com/bitbank2/JPEGDEC)
+    >[MiniTV](https://github.com/moononournation/MiniTV)
+    >[TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)
 
 ### 3. Touch
 
 * Chip: CST816S
 * Bus Communication Protocol: IIC
+* Dependencies:
+    >[cst816t-1.5.0](https://github.com/koendv/cst816t)
+    >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
 
 ### 4. Speaker
 
 * Driver Chip: MAX98357A
-* Speaker Model: FS2011NB0807x
-* Speaker Size:14x7.1x3.9cm
 * Bus Communication Protocol: IIS
 * Others:  Default configuration is Left/2 + Right/2 channels, gain of 9dB. To change the configuration, refer to the T-CameraPlus-S3 design schematic and adjust the resistors. The selected speaker should have a maximum rated power of 3.2W, with a impedance of around 4 ohms or less than 8 ohms.
+* Relevant information:
+    >[MAX98357A](./information/MAX98357AETE+T.pdf)
+* Dependencies:
+    >[arduino-libhelix-0.8.1](https://github.com/pschatzmann/arduino-libhelix)
+    >[ESP32-audioI2S-3.0.6](https://github.com/schreibfaul1/ESP32-audioI2S)
 
 ### 5. Microphone
 
@@ -97,9 +108,40 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 * Bus Communication Protocol: IIS
 * Others:  Default configuration is right channel. To change the configuration, refer to the T-CameraPlus-S3 design schematic and adjust the resistors.
 
+> #### T-CameraPlus-S3_V1.0-V1.1 version
+> * Chip: MSM261S4030H0R
+> * Bus Communication Protocol: IIS
+> * Others:  Default configuration is right channel. To change the configuration, refer to the T-CameraPlus-S3 design schematic and adjust the resistors.
+> * Relevant information:
+>     >[MSM261S4030H0R](information/MSM261S4030H0R.pdf)
+> * Dependencies:
+>     >[DFRobot_MSM261](https://github.com/DFRobot/DFrobot_MSM261)
+>     >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
+
+> #### T-CameraPlus-S3_V1.2 version
+> * Chip: MP34DT05-A
+> * Bus Communication Protocol: PDM
+> * Others:  Default configuration is right channel. To change the configuration, refer to the T-CameraPlus-S3 design schematic and adjust the resistors.
+> * Relevant information:
+>    >[MP34DT05-A](./information/mp34dt05-a.pdf)
+> * Dependencies:
+>    >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
+
 ### 6. Camera
 * CameraModel: OV2640
 * IR Filter Driver: AP1511B
+* Relevant information:
+    >[OV2640_Hardware_Application_V1.04](information/OV2640_Hardware_Application_V1.04.pdf)
+    >[OV2640_Software_Application_V1.03](information/OV2640_Software_Application_V1.03.pdf)
+
+### 7. Power Management Chip
+* Chip: SY6970
+* Relevant information:
+>[AN_SY6970 ](information/AN_SY6970.pdf)
+>[EVB_SY6970](information/EVB_SY6970.pdf)
+* Dependencies:
+>[XPowersLib-0.2.1](https://github.com/lewisxhe/XPowersLib)
+>[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
 
 ## QuickStart
 
@@ -126,7 +168,8 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 
 | Firmware | Description | Picture |
 | ------  | ------  | ------ |
-| [Lvgl_UI](./firmware/[T-CameraPlus-S3_V1.0-V1.1][Lvgl_UI]_firmware_V1.0.3.bin) | Simplify recording testing |  |
+| [Lvgl_UI(V1.0-V1.1)](./firmware/[T-CameraPlus-S3_V1.0-V1.1][Lvgl_UI]_firmware_202406142310.bin) |  |  |
+| [Lvgl_UI(V1.2)](./firmware/[T-CameraPlus-S3_V1.2][Lvgl_UI]_firmware_202504081446.bin) |  |  |
 
 ### PlatformIO
 1. Install[VisualStudioCode](https://code.visualstudio.com/Download),Choose installation based on your system type.
@@ -183,74 +226,133 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
     <img src="image/11.png" alt="example">
 </p>
 
-
 ## PinOverview
-| LCD PIN       | ESP32S3 PIN      |
-| :------------------: | :------------------:|
-| MOSI                     | IO35                  |
-| SCLK                  | IO36                  |
-| RST                    | IO33                  |
-| BL                      | IO46                  |
-| CS                    | IO34                  |
-| DC                    | IO45                  |
 
-| DMIC  PIN | ESP32S3 PIN      |
-| :------------------: | :------------------:|
-| BCLK                  | IO18                  |
-| WS                  | IO39                    |
-| DIN                  | IO40                  |
 
-| Amplifier PIN          | ESP32S3 PIN      |
-| :------------------: | :------------------:|
-| BCLK                  | IO41                  |
-| LRCLK                  | IO42                    |
-| DOUT                  | IO38                  |
+> #### T-CameraPlus-S3_V1.0-V1.1 版本
+>> | lcd pins       | esp32s3 pins      |
+>> | :------------------: | :------------------:|
+>> | MOSI                     | IO35                  |
+>> | SCLK                  | IO36                  |
+>> | RST                    | IO33                  |
+>> | BL                      | IO46                  |
+>> | CS                    | IO34                  |
+>> | DC                    | IO45                  |
+>
+>> | iis microphone msm261s4030h0r pins | esp32s3 pins      |
+>> | :------------------: | :------------------:|
+>> | BCLK                  | IO18                  |
+>> | WS                  | IO39                    |
+>> | DATA                  | IO40                  |
+>
+>> | amplifier max98357a pins          | esp32s3 pins      |
+>> | :------------------: | :------------------:|
+>> | BCLK                  | IO41                  |
+>> | LRCLK                  | IO42                    |
+>> | DATA                  | IO38                  |
+>
+>> | sd pins          | esp32s3 pins      |
+>> | :------------------: | :------------------:|
+>> | CS                  | IO21                  |
+>> | SCLK                  | IO36                    |
+>> | MOSI                  | IO35                  |
+>> | MISO                  | IO37                  |
+>
+>> | power management ic sy6970 pins          | esp32s3 pins      |
+>> | :------------------: | :------------------:|
+>> | SDA                  | IO1                  |
+>> | SCL                  | IO2                    |
+>> | INT                  | IO47                  |
+>
+>> | camera module ov2640 pins          | esp32s3 pins      |
+>> | :------------------: | :------------------:|
+>> | RESET                  | IO3                  |
+>> | XCLK                  | IO7                    |
+>> | SIDO                  | IO1                  |
+>> | SIOC                  | IO2                    |
+>> | D7                  | IO6                  |
+>> | D6                  | IO8                    |
+>> | D5                  | IO9                  |
+>> | D4                  | IO11                    |
+>> | D3                  | IO13                  |
+>> | D2                  | IO15                    |
+>> | D1                  | IO14                  |
+>> | D0                  | IO12                  |
+>> | VSYNC             | IO4                  |
+>> | HREF                  | IO5                  |
+>> | PCLK                  | IO10                  |
+>
+>> | touch chip pins         | esp32s3 pins      |
+>> | :------------------: | :------------------:|
+>> | SDA                  | IO1                  |
+>> | SCL                  | IO2                    |
+>> | RST                  | IO48                  |
+>> | INT                  | IO47                  |
 
-| SD PIN          | ESP32S3 PIN      |
-| :------------------: | :------------------:|
-| CS                  | IO21                  |
-| SCLK                  | IO36                    |
-| MOSI                  | IO35                  |
-| MISO                  | IO37                  |
 
-| Power chip PIN          | ESP32S3 PIN      |
-| :------------------: | :------------------:|
-| SDA                  | IO1                  |
-| SCL                  | IO2                    |
-| INT                  | IO47                  |
+> #### T-CameraPlus-S3_V1.2 版本
+>> | lcd pins       | esp32s3 pins      |
+>> | :------------------: | :------------------:|
+>> | MOSI                     | IO34                  |
+>> | SCLK                  | IO35                  |
+>> | BL                      | IO46                  |
+>> | CS                    | IO36                  |
+>> | DC                    | IO45                  |
+>
+>> | PDM Microphone MP34DT05TR Pins | esp32s3 pins      |
+>> | :------------------: | :------------------:|
+>> | LRCLK                  | IO40                  |
+>> | DATA                  | IO38                  |
+>
+>> | amplifier max98357a pins          | esp32s3 pins      |
+>> | :------------------: | :------------------:|
+>> | BCLK                  | IO41                  |
+>> | LRCLK                  | IO42                    |
+>> | DATA                  | IO39                  |
+>
+>> | sd pins          | esp32s3 pins      |
+>> | :------------------: | :------------------:|
+>> | CS                  | IO21                  |
+>> | SCLK                  | IO35                    |
+>> | MOSI                  | IO34                  |
+>> | MISO                  | IO48                  |
+>
+>> | power management ic sy6970 pins          | esp32s3 pins      |
+>> | :------------------: | :------------------:|
+>> | SDA                  | IO33                  |
+>> | SCL                  | IO37                    |
+>
+>> | camera module ov2640 pins          | esp32s3 pins      |
+>> | :------------------: | :------------------:|
+>> | XCLK                  | IO7                    |
+>> | SIDO                  | IO1                  |
+>> | SIOC                  | IO2                    |
+>> | D7                  | IO6                  |
+>> | D6                  | IO8                    |
+>> | D5                  | IO9                  |
+>> | D4                  | IO11                    |
+>> | D3                  | IO13                  |
+>> | D2                  | IO15                    |
+>> | D1                  | IO14                  |
+>> | D0                  | IO12                  |
+>> | VSYNC             | IO3                  |
+>> | HREF                  | IO5                  |
+>> | PCLK                  | IO10                  |
+>> | PWDN                  | IO4                  |
+>
+>> | touch chip pins         | esp32s3 pins      |
+>> | :------------------: | :------------------:|
+>> | SDA                  | IO33                  |
+>> | SCL                  | IO37                    |
+>> | INT                  | IO47                  |
 
-| Camera PIN          | ESP32S3 PIN      |
-| :------------------: | :------------------:|
-| RESET                  | IO3                  |
-| XCLK                  | IO7                    |
-| SIDO                  | IO1                  |
-| SIOC                  | IO2                    |
-| D7                  | IO6                  |
-| D6                  | IO8                    |
-| D5                  | IO9                  |
-| D4                  | IO11                    |
-| D3                  | IO13                  |
-| D2                  | IO15                    |
-| D1                  | IO14                  |
-| D0                  | IO12                  |
-| VSYNC             | IO4                  |
-| HREF                  | IO5                  |
-| PCLK                  | IO10                  |
-
-| Touch chip PIN          | ESP32S3 PIN      |
-| :------------------: | :------------------:|
-| SDA                  | IO1                  |
-| SCL                  | IO2                    |
-| RST                  | IO48                  |
-| INT                  | IO47                  |
-
-| Control the camera's infrared filter switch PIN     | ESP32S3 PIN      |
+| control pin for infrared cut filter switch of camera module ov2640     | esp32s3 pins      |
 | :------------------: | :------------------:|
 | AP1511B_FBC                  | IO16                  |
 
-| KEY PIN     | ESP32S3 PIN      |
+| key1 button pins     | esp32s3 pins      |
 | :------------------: | :------------------:|
-| KEY                  | IO17                  |
+| KEY1                  | IO17                  |
 
 ## FAQ
 
@@ -273,26 +375,5 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 * A. Please hold down the "BOOT-0" button and try downloading the program again.
 
 ## Project
-* [SCH_T-CameraPlus-S3_V1.1](project/SCH_T-CameraPlus-S3_V1.1_20241109.pdf)
-
-## Information
-* [Espressif](https://www.espressif.com/en/support/documents/technical-documents)
-* [AN_SY6970 ](information/AN_SY6970.pdf)
-* [EVB_SY6970](information/EVB_SY6970.pdf)
-* [AN-CST816T-v1](information/AN-CST816T-v1.pdf)
-* [FS2011NB0807-H3.9-R01](information/FS2011NB0807-H3.9-R01.pdf)
-* [MSM261S4030H0R](information/MSM261S4030H0R.pdf)
-* [OV2640_Hardware_Application_V1.04](information/OV2640_Hardware_Application_V1.04.pdf)
-* [OV2640_Software_Application_V1.03](information/OV2640_Software_Application_V1.03.pdf)
-
-## DependentLibraries
-* [Arduino_GFX-1.3.7](https://github.com/moononournation/Arduino_GFX)
-* [lvgl-8.3.5](https://github.com/lvgl/lvgl)
-* [arduino-libhelix-0.8.1](https://github.com/pschatzmann/arduino-libhelix)
-* [cst816t-1.5.0](https://github.com/koendv/cst816t)
-* [DFRobot_MSM261](https://github.com/DFRobot/DFrobot_MSM261)
-* [ESP32-audioI2S-3.0.6](https://github.com/schreibfaul1/ESP32-audioI2S)
-* [JPEGDEC-1.2.8](https://github.com/bitbank2/JPEGDEC)
-* [MiniTV](https://github.com/moononournation/MiniTV)
-* [XPowersLib-0.2.1](https://github.com/lewisxhe/XPowersLib)
-* [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)
+* [T-CameraPlus-S3_V1.0-V1.1](project/T-CameraPlus-S3_V1.0-V1.1_20241109.pdf)
+* [T-CameraPlus-S3_V1.2](project/T-CameraPlus-S3_V1.2_20240417.pdf)

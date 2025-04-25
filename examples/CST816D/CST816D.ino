@@ -1,113 +1,67 @@
 /*
- * @Description: CST816D.cpp
- * @version: V1.0.0
+ * @Description: None
  * @Author: LILYGO_L
- * @Date: 2023-08-25 17:09:20
- * @LastEditors: LILYGO_L
- * @LastEditTime: 2023-11-30 13:56:45
+ * @Date: 2025-04-03 17:32:36
+ * @LastEditTime: 2025-04-03 17:38:22
  * @License: GPL 3.0
  */
-/*
- demo of P168H002-CTP display.
- */
-#include "Arduino_GFX_Library.h"
-#include <Wire.h>
-#include "cst816t.h"
+
+#include "Arduino_DriveBus_Library.h"
 #include "pin_config.h"
 
-bool TP_Flag = false;
+std::shared_ptr<Arduino_IIC_DriveBus> IIC_Bus =
+    std::make_shared<Arduino_HWIIC>(IIC_SDA, IIC_SCL, &Wire);
 
-// fp-133h01d
-Arduino_DataBus *bus = new Arduino_HWSPI(
-    LCD_DC /* DC */, LCD_CS /* CS */, LCD_SCLK /* SCK */, LCD_MOSI /* MOSI */, -1 /* MISO */);
+void Arduino_IIC_Touch_Interrupt(void);
 
-Arduino_GFX *gfx = new Arduino_ST7789(
-    bus, LCD_RST /* RST */, 0 /* rotation */, true /* IPS */,
-    LCD_WIDTH /* width */, LCD_HEIGHT /* height */,
-    0 /* col offset 1 */, 0 /* row offset 1 */, 0 /* col_offset2 */, 0 /* row_offset2 */);
+std::unique_ptr<Arduino_IIC> CST816D(new Arduino_CST816x(IIC_Bus, CST816D_DEVICE_ADDRESS,
+                                                         TP_RST, TP_INT, Arduino_IIC_Touch_Interrupt));
 
-cst816t touchpad(TP_RST);
+void Arduino_IIC_Touch_Interrupt(void)
+{
+    CST816D->IIC_Interrupt_Flag = true;
+}
 
 void setup()
 {
     Serial.begin(115200);
     Serial.println("Ciallo");
 
-    pinMode(TP_INT, INPUT_PULLUP);
+    while (CST816D->begin() == false)
+    {
+        Serial.println("CST816D initialization fail");
+        delay(2000);
+    }
+    Serial.println("CST816D initialization successfully");
 
-    attachInterrupt(
-        TP_INT,
-        []
-        {
-            TP_Flag = true;
-            Serial.println("get_int");
-        },
-        FALLING);
+    // 中断模式为检测到触摸时，发出低脉冲
+    //  CST816D->IIC_Write_Device_State(CST816D->Arduino_IIC_Touch::Device::TOUCH_DEVICE_INTERRUPT_MODE,
+    //                                  CST816D->Arduino_IIC_Touch::Device_Mode::TOUCH_DEVICE_INTERRUPT_PERIODIC);
 
-    Wire.begin(SY6970_SDA, SY6970_SCL);
-    touchpad.begin(&Wire, mode_motion);
+    // 目前休眠功能只能进入不能退出 所有不建议开启休眠
+    // CST816D->IIC_Write_Device_State(CST816D->Arduino_IIC_Touch::Device::TOUCH_DEVICE_SLEEP_MODE,
+    //                                 CST816D->Arduino_IIC_Touch::Device_State::TOUCH_DEVICE_ON);
 
-    ledcAttachPin(LCD_BL, 1);
-    ledcSetup(1, 20000, 8);
-    ledcWrite(1, 255); // brightness 0 - 255
-
-    gfx->begin();
-    gfx->fillScreen(WHITE);
-
-    gfx->setTextColor(PINK);
-    gfx->setCursor(240 / 3, 240 / 3);
-    gfx->println(touchpad.version());
+    Serial.printf("ID: %#X \n\n", (int32_t)CST816D->IIC_Device_ID());
     delay(1000);
 }
 
 void loop()
 {
-    if (TP_Flag == true)
-    {
-        TP_Flag = false;
-        if (touchpad.available())
-        {
-            Serial.println(touchpad.state());
-            Serial.println(touchpad.gesture_id);
-            uint8_t touch_static = touchpad.gesture_id;
-            uint8_t touch_x = touchpad.x;
-            uint8_t touch_y = touchpad.y;
+    Serial.printf("System running time: %d\n\n", (uint32_t)millis() / 1000);
 
-            gfx->setCursor(touch_x, touch_y);
-            gfx->fillScreen(WHITE);
-            gfx->setTextColor(MAGENTA);
-            switch (touch_static)
-            {
-            case GESTURE_NONE:
-                gfx->print("NONE");
-                break;
-            case GESTURE_SWIPE_DOWN:
-                gfx->print("SWIPE UP"); // cst816d
-                // gfx->print("SWIPE DOWN"); // cst816t
-                break;
-            case GESTURE_SWIPE_UP:
-                gfx->print("SWIPE DOWN"); // cst816d
-                // gfx->print("SWIPE UP"); // cst816t
-                break;
-            case GESTURE_SWIPE_LEFT:
-                gfx->print("SWIPE LEFT");
-                break;
-            case GESTURE_SWIPE_RIGHT:
-                gfx->print("SWIPE RIGHT");
-                break;
-            case GESTURE_SINGLE_CLICK:
-                gfx->print("SINGLE CLICK");
-                break;
-            case GESTURE_DOUBLE_CLICK:
-                gfx->print("DOUBLE CLICK");
-                break;
-            case GESTURE_LONG_PRESS:
-                gfx->print("LONG PRESS");
-                break;
-            default:
-                gfx->print("?");
-                break;
-            }
-        }
+    if (CST816D->IIC_Interrupt_Flag == true)
+    {
+        CST816D->IIC_Interrupt_Flag = false;
+
+        Serial.printf("\nGesture:%s\n",
+                      (CST816D->IIC_Read_Device_State(CST816D->Arduino_IIC_Touch::Status_Information::TOUCH_GESTURE_ID)).c_str());
+        Serial.printf("Fingers Number:%d\n",
+                      (uint32_t)CST816D->IIC_Read_Device_Value(CST816D->Arduino_IIC_Touch::Value_Information::TOUCH_FINGER_NUMBER));
+        Serial.printf("Touch X:%d Y:%d\n\n",
+                      (uint32_t)CST816D->IIC_Read_Device_Value(CST816D->Arduino_IIC_Touch::Value_Information::TOUCH_COORDINATE_X),
+                      (uint32_t)CST816D->IIC_Read_Device_Value(CST816D->Arduino_IIC_Touch::Value_Information::TOUCH_COORDINATE_Y));
     }
+
+    delay(1000);
 }
