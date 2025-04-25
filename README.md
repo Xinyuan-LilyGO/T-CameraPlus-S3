@@ -2,7 +2,7 @@
  * @Description: None
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
- * @LastEditTime: 2025-04-25 13:49:35
+ * @LastEditTime: 2025-04-25 13:52:41
  * @License: GPL 3.0
 -->
 <h1 align = "center">T-CameraPlus-S3</h1>
@@ -147,24 +147,26 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 
 ### Examples Support
 
-| Example | Support IDE And Version| Description | Picture |
+| Example | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]`| Description | Picture |
 | ------  | ------  | ------ | ------ | 
-| [Wifi_Scan](./examples/Wifi_Scan) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
-| [Lvgl_UI](./examples/Lvgl_UI) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` | Product factory original testing |  |
-| [Wifi_Music](./examples/Wifi_Music) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
-| [SD_Music](./examples/SD_Music) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
-| [DMIC_ReadData](./examples/DMIC_ReadData) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
-| [SD_DMIC](./examples/SD_DMIC) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
-| [TFT](./examples/TFT) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
-| [IIC_Scan_2](./examples/IIC_Scan_2) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
-| [Camera_WebServer](./examples/Camera_WebServer) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
-| [CST816D](./examples/CST816D) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
-| [GFX_Test](./examples/GFX_Test) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
-| [SY6970](./examples/SY6970) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
-| [SD_MJPEG](./examples/SD_MJPEG) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
-| [Camera_Screen](./examples/Camera_Screen) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
-| [Camera_Screen_OV5640_Auto_Focus](./examples/Camera_Screen_OV5640_Auto_Focus) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
-| [Camera_WebServer_OV5640_Auto_Focus](./examples/Camera_WebServer_OV5640_Auto_Focus) | `[Platformio IDE][espressif32-v6.5.0]`<br />`[Arduino IDE][esp32_v2.0.14]` |  |  |
+| [Wifi_Scan](./examples/Wifi_Scan) | <p align="center">![alt text][supported] |  |  |
+| [Lvgl_UI](./examples/Lvgl_UI) | <p align="center">![alt text][supported] | Product factory original testing |  |
+| [Wifi_Music](./examples/Wifi_Music) | <p align="center">![alt text][supported] |  |  |
+| [SD_Music](./examples/SD_Music) | <p align="center">![alt text][supported] |  |  |
+| [DMIC_ReadData](./examples/DMIC_ReadData) | <p align="center">![alt text][supported] |  |  |
+| [SD_DMIC](./examples/SD_DMIC) | <p align="center">![alt text][supported] |  |  |
+| [TFT](./examples/TFT) | <p align="center">![alt text][supported] |  |  |
+| [IIC_Scan_2](./examples/IIC_Scan_2) | <p align="center">![alt text][supported] |  |  |
+| [Camera_WebServer](./examples/Camera_WebServer) | <p align="center">![alt text][supported] |  |  |
+| [CST816D](./examples/CST816D) | <p align="center">![alt text][supported] |  |  |
+| [GFX_Test](./examples/GFX_Test) | <p align="center">![alt text][supported] |  |  |
+| [SY6970](./examples/SY6970) | <p align="center">![alt text][supported] |  |  |
+| [SD_MJPEG](./examples/SD_MJPEG) | <p align="center">![alt text][supported] |  |  |
+| [Camera_Screen](./examples/Camera_Screen) | <p align="center">![alt text][supported] |  |  |
+| [Camera_Screen_OV5640_Auto_Focus](./examples/Camera_Screen_OV5640_Auto_Focus) | <p align="center">![alt text][supported] |  |  |
+| [Camera_WebServer_OV5640_Auto_Focus](./examples/Camera_WebServer_OV5640_Auto_Focus) | <p align="center">![alt text][supported] |  |  |
+
+[supported]: https://img.shields.io/badge/-supported-green "example"
 
 | Firmware | Description | Picture |
 | ------  | ------  | ------ |
@@ -172,7 +174,7 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 | [Lvgl_UI(V1.2)](./firmware/[T-CameraPlus-S3_V1.2][Lvgl_UI]_firmware_202504081446.bin) |  |  |
 
 ### PlatformIO
-1. Install[VisualStudioCode](https://code.visualstudio.com/Download),Choose installation based on your system type.
+1. Install [VisualStudioCode](https://code.visualstudio.com/Download),Choose installation based on your system type.
 
 2. Open the "Extension" section of the Visual Studio Code software sidebar(Alternatively, use "<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd>" to open the extension),Search for the "PlatformIO IDE" extension and download it.
 
@@ -183,7 +185,7 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 5. Open the "platformio.ini" file in the project folder (PlatformIO will automatically open the "platformio.ini" file corresponding to the added folder). Under the "[platformio]" section, uncomment and select the example program you want to burn (it should start with "default_envs = xxx") Then click "<kbd>[√](image/4.png)</kbd>" in the bottom left corner to compile,If the compilation is correct, connect the microcontroller to the computer and click "<kbd>[→](image/5.png)</kbd>" in the bottom left corner to download the program.
 
 ### Arduino
-1. Install[Arduino](https://www.arduino.cc/en/software),Choose installation based on your system type.
+1. Install [Arduino](https://www.arduino.cc/en/software),Choose installation based on your system type.
 
 2. Open the "example" directory within the project folder, select the example project folder, and open the file ending with ".ino" to open the Arduino IDE project workspace.
 
@@ -227,7 +229,6 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 </p>
 
 ## PinOverview
-
 
 > #### T-CameraPlus-S3_V1.0-V1.1 版本
 >> | lcd pins       | esp32s3 pins      |
