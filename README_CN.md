@@ -2,7 +2,7 @@
  * @Description: None
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
- * @LastEditTime: 2025-04-25 13:56:29
+ * @LastEditTime: 2025-07-07 11:34:27
  * @License: GPL 3.0
 -->
 
@@ -38,6 +38,7 @@
 - [模块](#模块)
 - [快速开始](#快速开始)
 - [引脚总览](#引脚总览)
+- [相关测试](#相关测试)
 - [常见问题](#常见问题)
 - [项目](#项目)
 
@@ -354,6 +355,13 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 | 按键KEY1引脚     | ESP32S3引脚      |
 | :------------------: | :------------------:|
 | KEY1                  | IO17                  |
+
+## 相关测试
+
+### 功耗
+| firmware | program | description | picture |
+| ------  | ------  | ------ | ------ | 
+| [Deep_Sleep_Wake_Up]() |[Deep_Sleep_Wake_Up](./examples/Deep_Sleep_Wake_Up/)| 平均电流消耗: 1.7mA 更多信息请查看 [功耗测试日志](./relevant_test/PowerConsumptionTestLog_[T-CameraPlus-S3_V1.2]_20250408.pdf) | |
 
 ## 常见问题
 

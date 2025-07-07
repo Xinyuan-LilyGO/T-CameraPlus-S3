@@ -2,7 +2,7 @@
  * @Description: None
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
- * @LastEditTime: 2025-04-25 13:52:41
+ * @LastEditTime: 2025-07-07 11:35:41
  * @License: GPL 3.0
 -->
 <h1 align = "center">T-CameraPlus-S3</h1>
@@ -37,6 +37,7 @@
 - [Module](#module)
 - [QuickStart](#quickstart)
 - [PinOverview](#pinoverview)
+- [RelatedTests](#RelatedTests)
 - [FAQ](#faq)
 - [Project](#project)
 
@@ -354,6 +355,13 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 | key1 button pins     | esp32s3 pins      |
 | :------------------: | :------------------:|
 | KEY1                  | IO17                  |
+
+## RelatedTests
+
+### Power Consumption
+| firmware | program | description | picture |
+| ------  | ------  | ------ | ------ | 
+| [Deep_Sleep_Wake_Up]() |[Deep_Sleep_Wake_Up](./examples/Deep_Sleep_Wake_Up/)| Average current consumption: 1.7mA. For more details, please refer to the [Power Consumption Test Log](./relevant_test/PowerConsumptionTestLog_[T-CameraPlus-S3_V1.2]_20250408.pdf).| |
 
 ## FAQ
 
