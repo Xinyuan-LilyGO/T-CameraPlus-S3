@@ -2,7 +2,7 @@
  * @Description: None
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
- * @LastEditTime: 2025-07-07 14:04:49
+ * @LastEditTime: 2025-07-07 14:06:09
  * @License: GPL 3.0
 -->
 <h1 align = "center">T-CameraPlus-S3</h1>
@@ -11,11 +11,11 @@
     <img src="image/13.jpg" alt="">
 </p>
 
-<p> 
+<!-- <p> 
   <a href="https://code.visualstudio.com/"> <img src="badges/VisualStudioCode_badge.png" height="20px" alt="VisualStudioCode_badge" /> </a>
   <a href="https://platformio.org/"> <img src="badges/PlatformIO_badge.png" height="20px" alt="PlatformIO_badge" /> </a>
   <a href="https://www.arduino.cc/"> <img src="badges/Arduino_badge.png" height="20px" alt="Arduino_badge"></a>
-</p> 
+</p>  -->
 
 ## **English | [中文](./README_CN.md)**
 
