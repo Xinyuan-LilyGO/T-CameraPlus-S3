@@ -2,7 +2,7 @@
  * @Description: None
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
- * @LastEditTime: 2025-07-07 14:06:18
+ * @LastEditTime: 2025-07-21 09:53:31
  * @License: GPL 3.0
 -->
 
@@ -165,6 +165,7 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 | [Camera_Screen](./examples/Camera_Screen) | <p align="center">![alt text][supported] |  |  |
 | [Camera_Screen_OV5640_Auto_Focus](./examples/Camera_Screen_OV5640_Auto_Focus) | <p align="center">![alt text][supported] |  |  |
 | [Camera_WebServer_OV5640_Auto_Focus](./examples/Camera_WebServer_OV5640_Auto_Focus) | <p align="center">![alt text][supported] |  |  |
+| [Voice_Speaker](./examples/Voice_Speaker) | <p align="center">![alt text][supported] |  |  |
 
 [supported]: https://img.shields.io/badge/-supported-green "example"
 
