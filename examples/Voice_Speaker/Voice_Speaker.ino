@@ -4,7 +4,7 @@
         Re output the microphone input data from the speaker
  * @Author: LILYGO_L
  * @Date: 2023-12-21 11:30:50
- * @LastEditTime: 2025-07-21 09:48:02
+ * @LastEditTime: 2025-07-22 10:08:46
  * @License: GPL 3.0
  */
 #include "Arduino_DriveBus_Library.h"
@@ -14,7 +14,7 @@
 #define IIS_SAMPLE_RATE 44100 // 采样速率
 #define IIS_DATA_BIT 16       // 数据位数
 
-char IIS_Read_Buff[10];
+int16_t IIS_Read_Buff[10];
 
 #ifdef T_CameraPlus_S3_V1_0_V1_1
 std::shared_ptr<Arduino_IIS_DriveBus> IIS_Bus =
@@ -101,12 +101,21 @@ void setup()
 
 void loop()
 {
-    if (IIS->IIS_Read_Data(IIS_Read_Buff, sizeof(IIS_Read_Buff)) == true)
+    if (IIS->IIS_Read_Data(IIS_Read_Buff, sizeof(IIS_Read_Buff) * sizeof(int16_t)) == true)
     {
         // 单声道处理
         // IIS_Mono_Processing(IIS_Read_Buff, 12, 0);
 
-        if (MAX98357A->IIS_Write_Data(IIS_Read_Buff, sizeof(IIS_Read_Buff)) == true)
+        // 音量放大20倍（限制在 int16_t 范围内防止溢出）
+        int16_t *ptr = IIS_Read_Buff;
+        for (int i = 0; i < sizeof(IIS_Read_Buff); i++)
+        {
+            int32_t amplified = *ptr * 20;
+            *ptr++ = (amplified > 32767) ? 32767 : (amplified < -32768) ? -32768
+                                                                        : amplified;
+        }
+
+        if (MAX98357A->IIS_Write_Data(IIS_Read_Buff, sizeof(IIS_Read_Buff) * sizeof(int16_t)) == true)
         {
             // Serial.printf("MAX98357A played successfully\n");
         }
