@@ -4,7 +4,7 @@
         44.1kHz mono sampling rate.
  * @Author: LILYGO_L
  * @Date: 2023-08-17 15:55:47
- * @LastEditTime: 2025-04-03 09:40:40
+ * @LastEditTime: 2025-07-23 15:15:02
  * @License: GPL 3.0
  */
 
@@ -218,6 +218,20 @@ void setup()
         //     // Wave_CommunicationData[(i << 2) + 2] = 0;
         //     // Wave_CommunicationData[(i << 2) + 3] = 0;
         // }
+
+        // Amplify the audio data by 20x with clipping protection
+        for (int i = 0; i < MICROPHONE_NUM_COMMUNICATION_DATA; i += 2)
+        {
+            // Combine two 8-bit samples into one 16-bit sample
+            int16_t sample = (Wave_CommunicationData[i + 1] << 8) | Wave_CommunicationData[i];
+
+            // Amplify with clipping protection
+            sample = (int16_t)constrain((int32_t)sample * 20, -32768, 32767);
+
+            // Split back into 8-bit values
+            Wave_CommunicationData[i] = sample & 0xFF;
+            Wave_CommunicationData[i + 1] = (sample >> 8) & 0xFF;
+        }
 
         // 单声道处理
         IIS_Mono_Processing(Wave_CommunicationData, MICROPHONE_NUM_COMMUNICATION_DATA, 0);

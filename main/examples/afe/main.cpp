@@ -2,7 +2,7 @@
  * @Description: Afe
  * @Author: LILYGO_L
  * @Date: 2025-07-22 15:02:53
- * @LastEditTime: 2025-07-23 13:41:49
+ * @LastEditTime: 2025-07-23 15:21:28
  * @License: GPL 3.0
  */
 #include <stdio.h>
@@ -61,7 +61,7 @@ void feed_Task(void *arg)
 
         // 音量放大20倍（限制在 int16_t 范围内防止溢出）
         int16_t *ptr = iis_buffer.get();
-        for (int i = 0; i < sizeof(iis_buffer.get()); i++)
+        for (int i = 0; i < sizeof(audio_chunksize * 2); i++)
         {
             int32_t amplified = *ptr * 20;
             *ptr++ = (amplified > 32767) ? 32767 : (amplified < -32768) ? -32768
@@ -83,10 +83,10 @@ void detect_Task(void *arg)
     printf("------------detect start------------\n");
 
     // modify wakenet detection threshold
-    // afe_handle->set_wakenet_threshold(afe_data, 1, 0.6); // set model1's threshold to 0.6
-    // afe_handle->set_wakenet_threshold(afe_data, 2, 0.6); // set model2's threshold to 0.6
-    afe_handle->reset_wakenet_threshold(afe_data, 1); // reset model1's threshold to default
-    afe_handle->reset_wakenet_threshold(afe_data, 2); // reset model2's threshold to default
+    afe_handle->set_wakenet_threshold(afe_data, 1, 0.4); // set model1's threshold to 0.6
+    afe_handle->set_wakenet_threshold(afe_data, 2, 0.4); // set model2's threshold to 0.6
+    // afe_handle->reset_wakenet_threshold(afe_data, 1); // reset model1's threshold to default
+    // afe_handle->reset_wakenet_threshold(afe_data, 2); // reset model2's threshold to default
 
     size_t cycle_time = 0;
     while (1)
@@ -132,7 +132,7 @@ void Afe_Init()
         }
     }
 
-    afe_config_t *afe_config = afe_config_init("MM", models, AFE_TYPE_SR, AFE_MODE_LOW_COST);
+    afe_config_t *afe_config = afe_config_init("NM", models, AFE_TYPE_SR, AFE_MODE_LOW_COST);
 
     // print/modify wake word model.
     if (afe_config->wakenet_model_name)
