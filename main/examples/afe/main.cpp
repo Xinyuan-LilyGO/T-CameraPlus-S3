@@ -2,7 +2,7 @@
  * @Description: Afe
  * @Author: LILYGO_L
  * @Date: 2025-07-22 15:02:53
- * @LastEditTime: 2025-07-23 15:21:28
+ * @LastEditTime: 2025-07-23 15:38:55
  * @License: GPL 3.0
  */
 #include <stdio.h>
@@ -27,6 +27,10 @@
 esp_afe_sr_iface_t *afe_handle = NULL;
 
 #ifdef T_CameraPlus_S3_V1_0_V1_1
+
+auto IIS_Bus = std::make_shared<Cpp_Bus_Driver::Hardware_Iis>(MSM261_DATA, DEFAULT_CPP_BUS_DRIVER_VALUE,
+                                                              MSM261_WS, MSM261_BCLK, DEFAULT_CPP_BUS_DRIVER_VALUE, i2s_port_t::I2S_NUM_0,
+                                                              Cpp_Bus_Driver::Hardware_Iis::Data_Mode::INPUT, Cpp_Bus_Driver::Hardware_Iis::Iis_Mode::STD);
 
 #elif defined T_CameraPlus_S3_V1_2
 
@@ -216,10 +220,11 @@ extern "C" void app_main()
     Esp32s3->pin_mode(MP34DT05TR_MAX98357_EN, Cpp_Bus_Driver::Tool::Pin_Mode::OUTPUT);
     Esp32s3->pin_write(MP34DT05TR_MAX98357_EN, 0);
 
-    IIS_Bus->begin(MCLK_MULTIPLE, SAMPLE_RATE, i2s_data_bit_width_t::I2S_DATA_BIT_WIDTH_16BIT);
 #else
 #error "Unknown macro definition. Please select the correct macro definition."
 #endif
+
+    IIS_Bus->begin(MCLK_MULTIPLE, SAMPLE_RATE, i2s_data_bit_width_t::I2S_DATA_BIT_WIDTH_16BIT);
 
     // Wakenet_Init();
     Afe_Init();

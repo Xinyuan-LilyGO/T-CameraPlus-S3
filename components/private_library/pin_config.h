@@ -2,13 +2,13 @@
  * @Description: None
  * @Author: LILYGO_L
  * @Date: 2024-11-11 11:36:49
- * @LastEditTime: 2025-04-21 09:19:27
+ * @LastEditTime: 2025-07-23 15:38:10
  * @License: GPL 3.0
  */
 #pragma once
 
-// #define T_CameraPlus_S3_V1_0_V1_1
-#define T_CameraPlus_S3_V1_2
+#define T_CameraPlus_S3_V1_0_V1_1
+// #define T_CameraPlus_S3_V1_2
 
 #ifdef T_CameraPlus_S3_V1_0_V1_1
 
