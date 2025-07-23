@@ -2,7 +2,7 @@
  * @Description: Afe
  * @Author: LILYGO_L
  * @Date: 2025-07-22 15:02:53
- * @LastEditTime: 2025-07-23 12:12:56
+ * @LastEditTime: 2025-07-23 13:41:49
  * @License: GPL 3.0
  */
 #include <stdio.h>
@@ -58,6 +58,15 @@ void feed_Task(void *arg)
         // {
         //     printf("read_data: %d\n", iis_buffer[i]);
         // }
+
+        // 音量放大20倍（限制在 int16_t 范围内防止溢出）
+        int16_t *ptr = iis_buffer.get();
+        for (int i = 0; i < sizeof(iis_buffer.get()); i++)
+        {
+            int32_t amplified = *ptr * 20;
+            *ptr++ = (amplified > 32767) ? 32767 : (amplified < -32768) ? -32768
+                                                                        : amplified;
+        }
 
         afe_handle->feed(afe_data, iis_buffer.get());
 
