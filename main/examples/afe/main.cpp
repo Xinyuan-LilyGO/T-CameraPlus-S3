@@ -2,7 +2,7 @@
  * @Description: Afe
  * @Author: LILYGO_L
  * @Date: 2025-07-22 15:02:53
- * @LastEditTime: 2025-07-23 15:38:55
+ * @LastEditTime: 2025-07-23 16:03:24
  * @License: GPL 3.0
  */
 #include <stdio.h>
@@ -50,11 +50,11 @@ void feed_Task(void *arg)
     int audio_chunksize = afe_handle->get_feed_chunksize(afe_data);
     int nch = afe_handle->get_feed_channel_num(afe_data);
 
-    auto iis_buffer = std::make_unique<int16_t[]>(audio_chunksize * sizeof(int16_t) * 2);
+    auto iis_buffer = std::make_unique<int16_t[]>(audio_chunksize * sizeof(int16_t));
 
     while (1)
     {
-        IIS_Bus->read(iis_buffer.get(), audio_chunksize * sizeof(uint16_t) * 2);
+        IIS_Bus->read(iis_buffer.get(), audio_chunksize * sizeof(uint16_t));
 
         // IIS_Bus->write(iis_buffer, audio_chunksize * sizeof(uint16_t) * 2);
 
