@@ -90,7 +90,7 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 * Bus Communication Protocol: IIC
 * Dependent libraries:
     >[cst816t-1.5.0](https://github.com/koendv/cst816t)  <br /> 
-    >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
+    >[Arduino_DriveBus-1.1.16]()
 
 ### 4. Speaker
 
@@ -117,7 +117,7 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 >     >[MSM261S4030H0R](information/MSM261S4030H0R.pdf)
 > * Dependent libraries:
 >     >[DFRobot_MSM261](https://github.com/DFRobot/DFrobot_MSM261)  <br /> 
->     >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
+>     >[Arduino_DriveBus-1.1.16]()
 
 > #### T-CameraPlus-S3_V1.2 version
 > * Chip: MP34DT05-A
@@ -126,7 +126,7 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 > * Relevant information:
 >    >[MP34DT05-A](./information/mp34dt05-a.pdf)
 > * Dependent libraries:
->    >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
+>    >[Arduino_DriveBus-1.1.16]()
 
 ### 6. Camera
 * CameraModel: OV2640
@@ -142,7 +142,7 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 >[EVB_SY6970](information/EVB_SY6970.pdf)
 * Dependent libraries:
 >[XPowersLib-0.2.1](https://github.com/lewisxhe/XPowersLib)  <br /> 
->[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
+>[Arduino_DriveBus-1.1.16]()
 
 ## QuickStart
 

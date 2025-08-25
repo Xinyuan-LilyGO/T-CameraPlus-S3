@@ -112,7 +112,7 @@ void setup()
     gfx->fillScreen(WHITE);
 
     gfx->setTextColor(BLACK);
-
+attachInterrupt
     OV2640_Initialization_Flag = OV2640_Initialization();
 }
 

@@ -1,9 +1,9 @@
 /*
  * @Description(CN):基于Arduino的文件管理系统
  * @version: V1.0.0
- * @Author: Xk_w
+ * @Author: LILYGO_L
  * @Date: 2023-10-05 08:45:32
- * @LastEditors: Xk_w
+ * @LastEditors: LILYGO_L
  * @LastEditTime: 2023-11-22 15:17:20
  * @License: GPL 3.0
  */

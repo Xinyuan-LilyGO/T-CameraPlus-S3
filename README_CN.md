@@ -2,7 +2,7 @@
  * @Description: None
  * @Author: LILYGO_L
  * @Date: 2023-09-11 16:13:14
- * @LastEditTime: 2025-07-23 17:15:13
+ * @LastEditTime: 2025-08-25 15:17:30
  * @License: GPL 3.0
 -->
 
@@ -93,7 +93,7 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 * 总线通信协议：IIC
 * 依赖库：
     >[cst816t-1.5.0](https://github.com/koendv/cst816t)  <br /> 
-    >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
+    >[Arduino_DriveBus-1.1.16]()
 
 ### 4. 扬声器
 
@@ -116,7 +116,7 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 >     >[MSM261S4030H0R](information/MSM261S4030H0R.pdf)
 > * 依赖库：
 >     >[DFRobot_MSM261](https://github.com/DFRobot/DFrobot_MSM261)  <br /> 
->     >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
+>     >[Arduino_DriveBus-1.1.16]()
 
 > #### T-CameraPlus-S3_V1.2 版本
 > * 芯片：MP34DT05-A
@@ -125,7 +125,7 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 > * 相关资料：
 >    >[MP34DT05-A](./information/mp34dt05-a.pdf)
 > * 依赖库：
->    >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
+>    >[Arduino_DriveBus-1.1.16]()
 
 ### 6. 摄像头
 * 摄像头型号：OV2640
@@ -141,7 +141,7 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
     >[EVB_SY6970](information/EVB_SY6970.pdf)
 * 依赖库：
     >[XPowersLib-0.2.1](https://github.com/lewisxhe/XPowersLib)  <br /> 
-    >[Arduino_DriveBus-1.1.16](https://github.com/Xk-w/Arduino_DriveBus)
+    >[Arduino_DriveBus-1.1.16]()
 
 ## 快速开始
 
