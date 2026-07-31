@@ -173,8 +173,11 @@ T-CameraPlus-S3是基于ESP32S3芯片所开发的智能摄像头模组，板载2
 
 | Firmware | Description | Picture |
 | ------  | ------  | ------ |
-| [Lvgl_UI(V1.0-V1.1)](./firmware/[T-CameraPlus-S3_V1.0-V1.1][Lvgl_UI]_firmware_202406142310.bin) |  |  |
-| [Lvgl_UI(V1.2)](./firmware/[T-CameraPlus-S3_V1.2][Lvgl_UI]_firmware_202504081446.bin) |  |  |
+| [Lvgl_UI（V1.0-V1.1）](./firmware/[T-CameraPlus-S3][Lvgl_UI]/[T-CameraPlus-S3_V1.0-V1.1][Lvgl_UI]_firmware_202406142310.bin) | 适用于 T-CameraPlus-S3 V1.0-V1.1 的 LVGL UI 出厂固件。 |  |
+| [Lvgl_UI（V1.2）](./firmware/[T-CameraPlus-S3][Lvgl_UI]/[T-CameraPlus-S3_V1.2][Lvgl_UI]_firmware_202504081446.bin) | 适用于 T-CameraPlus-S3 V1.2 的 LVGL UI 出厂固件。 |  |
+| [Wifi_Iperf（V1.0.0）](./firmware/[T-CameraPlus-S3][Wifi_Iperf]/[T-CameraPlus-S3][Wifi_Iperf]_firmware_V1.0.0.bin) | Wi-Fi TCP/UDP 吞吐量测试固件，测试方法见[命令说明](./firmware/[T-CameraPlus-S3][Wifi_Iperf]/WIFI_Iperf.txt)。 |  |
+| [xiaozhi（V2.1.0，主板 V1.0-V1.1）](./firmware/[T-CameraPlus-S3][xiaozhi]/[T-CameraPlus-S3_V1.0-V1.1][xiaozhi_V2.1.0]_firmware_202606261629.bin) | 适用于 T-CameraPlus-S3 V1.0-V1.1 的小智 AI 语音助手固件。 |  |
+| [xiaozhi（V2.1.0，主板 V1.2）](./firmware/[T-CameraPlus-S3][xiaozhi]/[T-CameraPlus-S3_V1.2][xiaozhi_V2.1.0]_firmware_202606261623.bin) | 适用于 T-CameraPlus-S3 V1.2 的小智 AI 语音助手固件。 |  |
 
 ### PlatformIO
 1. 安装[VisualStudioCode](https://code.visualstudio.com/Download)，根据你的系统类型选择安装。

@@ -174,8 +174,11 @@ T-CameraPlus-S3 is an intelligent camera module developed based on the ESP32S3 c
 
 | Firmware | Description | Picture |
 | ------  | ------  | ------ |
-| [Lvgl_UI(V1.0-V1.1)](./firmware/[T-CameraPlus-S3_V1.0-V1.1][Lvgl_UI]_firmware_202406142310.bin) |  |  |
-| [Lvgl_UI(V1.2)](./firmware/[T-CameraPlus-S3_V1.2][Lvgl_UI]_firmware_202504081446.bin) |  |  |
+| [Lvgl_UI (V1.0-V1.1)](./firmware/[T-CameraPlus-S3][Lvgl_UI]/[T-CameraPlus-S3_V1.0-V1.1][Lvgl_UI]_firmware_202406142310.bin) | Factory firmware with the LVGL UI for T-CameraPlus-S3 V1.0-V1.1. |  |
+| [Lvgl_UI (V1.2)](./firmware/[T-CameraPlus-S3][Lvgl_UI]/[T-CameraPlus-S3_V1.2][Lvgl_UI]_firmware_202504081446.bin) | Factory firmware with the LVGL UI for T-CameraPlus-S3 V1.2. |  |
+| [Wifi_Iperf (V1.0.0)](./firmware/[T-CameraPlus-S3][Wifi_Iperf]/[T-CameraPlus-S3][Wifi_Iperf]_firmware_V1.0.0.bin) | Wi-Fi TCP/UDP throughput test firmware. See the [test commands](./firmware/[T-CameraPlus-S3][Wifi_Iperf]/WIFI_Iperf.txt). |  |
+| [xiaozhi (V2.1.0, board V1.0-V1.1)](./firmware/[T-CameraPlus-S3][xiaozhi]/[T-CameraPlus-S3_V1.0-V1.1][xiaozhi_V2.1.0]_firmware_202606261629.bin) | Xiaozhi AI voice assistant firmware for T-CameraPlus-S3 V1.0-V1.1. |  |
+| [xiaozhi (V2.1.0, board V1.2)](./firmware/[T-CameraPlus-S3][xiaozhi]/[T-CameraPlus-S3_V1.2][xiaozhi_V2.1.0]_firmware_202606261623.bin) | Xiaozhi AI voice assistant firmware for T-CameraPlus-S3 V1.2. |  |
 
 ### PlatformIO
 1. Install [VisualStudioCode](https://code.visualstudio.com/Download),Choose installation based on your system type.
