@@ -22,29 +22,19 @@ bool SY6970_Initialization(void)
     }
     else
     {
+        // 与cpp_bus_driver的SY6970初始化序列保持一致：
+        // 输入限流2000mA并启用ILIM、禁用看门狗、快充限流512mA。
+        if (PMU.writeRegister(POWERS_SY6970_REG_00H, 0x66) != 0 ||
+            PMU.writeRegister(POWERS_SY6970_REG_07H, 0x8D) != 0 ||
+            PMU.writeRegister(POWERS_SY6970_REG_04H, 0x08) != 0)
+        {
+            My_UI.SY6970_Initialization_Flag = false;
+            return false;
+        }
+
         My_UI.SY6970_Initialization_Flag = true;
 
-        // 设置输入电流限制
-        PMU.setInputCurrentLimit(2000);
-
-        // To obtain voltage data, the ADC must be enabled first
-        PMU.enableADCMeasure();
-
-        // Set Charge Voltage Limit, Range:3840 ~ 4608mV ,step:16 mV
-        PMU.setChargeTargetVoltage(My_UI.Battery_Control_Charge_Voltage_Limit);
-
-        // Set Fast Charge Current Limit, Range:0~5056mA ,step:64mA
-        PMU.setChargerConstantCurr(My_UI.Battery_Control_Fast_Charge_Current_Limit); // 普通锂电池限制充电450mA
-
-        // Set Precharge Current Limit , Range: 64mA ~ 1024mA ,step:64mA
-        PMU.setPrechargeCurr(My_UI.Battery_Control_Precharge_Charge_Current_Limit);
-
-        // Set Termination Current Limit , Range: 64mA ~ 1024mA ,step:64mA
-        PMU.setTerchargeCurr(My_UI.Battery_Control_Termination_Charge_Current_Limit);
-
-        PMU.disableOTG();
-
-        My_UI.Battery_Control_OTG_Mode_Flag = My_UI.Battery_Control_OTG_OFF;
+        My_UI.Battery_Control_OTG_Mode_Flag = PMU.isOTG();
 
         My_UI.Battery_Information_Bus_Mode = PMU.getBusStatusString();
         My_UI.Battery_Information_Charge_Mode = PMU.getChargeStatusString();
@@ -55,6 +45,10 @@ bool SY6970_Initialization(void)
         My_UI.Battery_Information_Fast_Charge_Current_Limit = PMU.getChargerConstantCurr();
         My_UI.Battery_Information_Precharge_Charge_Current_Limit = PMU.getPrechargeCurr();
         My_UI.Battery_Information_Termination_Charge_Current_Limit = PMU.getTerchargeCurr();
+        My_UI.Battery_Control_Charge_Voltage_Limit = My_UI.Battery_Information_Charge_Voltage_Limit;
+        My_UI.Battery_Control_Fast_Charge_Current_Limit = My_UI.Battery_Information_Fast_Charge_Current_Limit;
+        My_UI.Battery_Control_Precharge_Charge_Current_Limit = My_UI.Battery_Information_Precharge_Charge_Current_Limit;
+        My_UI.Battery_Control_Termination_Charge_Current_Limit = My_UI.Battery_Information_Termination_Charge_Current_Limit;
 
         return true;
     }

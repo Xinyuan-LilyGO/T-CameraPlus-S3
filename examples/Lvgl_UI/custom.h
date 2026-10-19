@@ -188,7 +188,7 @@ public:
     uint16_t Battery_Information_Termination_Charge_Current_Limit = 0;
 
     uint16_t Battery_Control_Charge_Voltage_Limit = 4208;
-    uint16_t Battery_Control_Fast_Charge_Current_Limit = 320;
+    uint16_t Battery_Control_Fast_Charge_Current_Limit = 512;
     uint16_t Battery_Control_Precharge_Charge_Current_Limit = 192;
     uint16_t Battery_Control_Termination_Charge_Current_Limit = 128;
 
